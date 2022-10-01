@@ -1,0 +1,40 @@
+extends TextureProgress
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = "text"
+var currentTime 
+var maxTime
+var synced = false
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+  self.currentTime = 0.0
+  self.maxTime = 10.0
+  self.value = 0.0
+  self.max_value = 100.0
+  self.min_value = 0.0
+  self.fill_mode = 4
+  self.radial_initial_angle = 0.0
+  
+  # Connect to WorldSwitchTimer timeout signal
+  var worldSwitchTimer = get_parent().get_parent().get_node("WorldSwitchTimer")
+  worldSwitchTimer.connect("timeout", self, "on_world_switch_timer_timeout")
+  
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+  # Update the progress bar to be a percantage of the time remaining to the next 10 second mark
+  self.currentTime += delta
+  if self.currentTime >= self.maxTime:
+    self.currentTime = 0.0
+  self.value = (self.currentTime / self.maxTime) * 100.0
+
+func on_world_switch_timer_timeout():
+  # Sync the progress bar to the world switch timer
+  self.currentTime = 0.0
+  self.value = 0.0
+  self.synced = true
+    
