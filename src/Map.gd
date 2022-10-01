@@ -32,6 +32,12 @@ func _toggle_tilemap_collision(tileMap):
     tileMap.collision_layer = 0
     tileMap.collision_mask  = 0
 
+func _input(event):
+   # This event resets the world switch timer, and we manually trigger the world
+   # switch here.
+   if event.is_action_pressed("force_world_timeout"):
+    self._on_WorldSwitchTimer_timeout()
+
 func _on_WorldSwitchTimer_timeout():
   activeWorld = (activeWorld + 1) % worlds.size()
   self._set_visibility()

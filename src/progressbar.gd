@@ -26,6 +26,12 @@ func _process(delta):
     self.currentTime = 0.0
   self.value = (self.currentTime / self.maxTime) * 100.0
 
+func _input(event):
+   # This event resets the world switch timer, and we manually trigger the world
+   # switch here.
+   if event.is_action_pressed("force_world_timeout"):
+    self._on_WorldSwitchTimer_timeout()
+
 func _on_WorldSwitchTimer_timeout():
   # Sync the progress bar to the world switch timer
   self.currentTime = 0.0
