@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/progressbar.gd" type="Script" id=1]
+[ext_resource path="res://src/TEST-Node2D.tscn" type="PackedScene" id=2]
+
+[sub_resource type="OpenSimplexNoise" id=3]
+
+[sub_resource type="NoiseTexture" id=4]
+width = 32
+height = 32
+noise = SubResource( 3 )
+noise_offset = Vector2( 0.01, 0 )
+
+[node name="Main" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+
+[node name="WorldSwitchTimer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="TimerVisualizer" type="TextureProgress" parent="HUD"]
+margin_left = 74.0
+margin_top = 59.0
+margin_right = 586.0
+margin_bottom = 571.0
+texture_progress = SubResource( 4 )
+tint_progress = Color( 0.101961, 0.643137, 0.129412, 1 )
+radial_initial_angle = 98.6
+script = ExtResource( 1 )
+
+[connection signal="timeout" from="WorldSwitchTimer" to="HUD/TimerVisualizer" method="_on_WorldSwitchTimer_timeout"]

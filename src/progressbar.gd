@@ -17,12 +17,6 @@ func _ready():
   self.min_value = 0.0
   self.fill_mode = 4
   self.radial_initial_angle = 0.0
-  
-  # Connect to WorldSwitchTimer timeout signal
-  var worldSwitchTimer = get_parent().get_parent().get_node("WorldSwitchTimer")
-  worldSwitchTimer.connect("timeout", self, "on_world_switch_timer_timeout")
-  
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -32,9 +26,8 @@ func _process(delta):
     self.currentTime = 0.0
   self.value = (self.currentTime / self.maxTime) * 100.0
 
-func on_world_switch_timer_timeout():
+func _on_WorldSwitchTimer_timeout():
   # Sync the progress bar to the world switch timer
   self.currentTime = 0.0
   self.value = 0.0
   self.synced = true
-    
