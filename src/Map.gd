@@ -27,9 +27,11 @@ func _set_visibility():
 func _toggle_tilemap_collision(tileMap):
   if tileMap.visible:
     tileMap.collision_layer = 1
+    tileMap.collision_mask  = 1
   else:
-    tileMap.collision_layer = 2
+    tileMap.collision_layer = 0
+    tileMap.collision_mask  = 0
 
 func _on_WorldSwitchTimer_timeout():
-  self.activeWorld = (self.activeWorld + 1) % self.worlds.size()
+  activeWorld = (activeWorld + 1) % worlds.size()
   self._set_visibility()
