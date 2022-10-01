@@ -42,7 +42,7 @@ func _draw():
   var pos = shape.transform.origin
   var dim = shape.shape.extents
   var col = Color(1, 0, 0, 1)
-  draw_rect(Rect2(pos, dim), col)
+  draw_rect(Rect2(pos-dim, dim*2), col)
 
 
 func shoot():
