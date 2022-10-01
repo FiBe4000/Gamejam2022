@@ -28,6 +28,7 @@ script = ExtResource( 4 )
 [node name="Player" parent="." instance=ExtResource( 2 )]
 
 [node name="WorldSwitchTimer" type="Timer" parent="."]
+wait_time = 10.0
 autostart = true
 script = ExtResource( 8 )
 
