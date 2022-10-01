@@ -1,11 +1,13 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://src/progressbar.gd" type="Script" id=1]
 [ext_resource path="res://src/entities/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/Map.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/Map.gd" type="Script" id=4]
 [ext_resource path="res://src/Main.gd" type="Script" id=5]
-[ext_resource path="res://src/WorldSwitchTimer.gd" type="Script" id=6]
+[ext_resource path="res://src/WorldChangeSystem.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/HUD/CompassPlaceholder.gd" type="Script" id=7]
+[ext_resource path="res://src/WorldSwitchTimer.gd" type="Script" id=8]
 
 [sub_resource type="OpenSimplexNoise" id=3]
 
@@ -26,21 +28,33 @@ script = ExtResource( 4 )
 [node name="Player" parent="." instance=ExtResource( 2 )]
 
 [node name="WorldSwitchTimer" type="Timer" parent="."]
-wait_time = 10.0
 autostart = true
-script = ExtResource( 6 )
+script = ExtResource( 8 )
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
 [node name="TimerVisualizer" type="TextureProgress" parent="HUD"]
-margin_right = 32.0
-margin_bottom = 32.0
+margin_left = 30.0
+margin_top = 79.0
+margin_right = 62.0
+margin_bottom = 111.0
 texture_progress = SubResource( 4 )
 tint_progress = Color( 0.101961, 0.643137, 0.129412, 1 )
 script = ExtResource( 1 )
 
+[node name="CompassPlaceholder" type="Node" parent="HUD"]
+
+[node name="CompassPlaceholder" type="Node2D" parent="HUD/CompassPlaceholder"]
+position = Vector2( 25, 116 )
+script = ExtResource( 7 )
+
 [node name="StartPosition" type="Position2D" parent="."]
 position = Vector2( 456, 344 )
 
+[node name="WorldChangeSystem" parent="." instance=ExtResource( 6 )]
+
 [connection signal="timeout" from="WorldSwitchTimer" to="Map" method="_on_WorldSwitchTimer_timeout"]
 [connection signal="timeout" from="WorldSwitchTimer" to="HUD/TimerVisualizer" method="_on_WorldSwitchTimer_timeout"]
+[connection signal="timeout" from="WorldSwitchTimer" to="WorldChangeSystem" method="_on_WorldSwitchTimer_timeout"]
+[connection signal="new_world_alignment" from="WorldChangeSystem" to="HUD/CompassPlaceholder/CompassPlaceholder" method="_on_WorldChangeSystem_new_world_alignment"]
+[connection signal="next_world_change" from="WorldChangeSystem" to="Map" method="_on_WorldChangeSystem_next_world_change"]
