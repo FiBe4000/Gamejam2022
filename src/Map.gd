@@ -1,6 +1,6 @@
 extends Node2D
 
-const WS = preload("res://src/WorldSystem.gd")
+const WS = preload("res://src/WorldChangeSystem.gd")
 
 
 # There is Normal, Dark, Fire, Ice worlds
@@ -45,12 +45,8 @@ func _input(event):
    # This event resets the world switch timer, and we manually trigger the world
    # switch here.
    if event.is_action_pressed("force_world_timeout"):
-    self._on_WorldSystem_next_world_change(WS.WORLD.NORMAL)
+    self._on_WorldChangeSystem_next_world_change(WS.WORLD.NORMAL)
 
-#func _on_WorldSwitchTimer_timeout():
-#  activeWorld = (activeWorld + 1) % worlds.size()
-#  self._set_visibility()
-
-func _on_WorldSystem_next_world_change(new_world):
+func _on_WorldChangeSystem_next_world_change(new_world):
   activeWorld = new_world
   _set_visibility()

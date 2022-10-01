@@ -1,7 +1,7 @@
 tool
 extends Node2D
 
-const WorldSystem = preload("res://src/WorldSystem.gd")
+const WorldSystem = preload("res://src/WorldChangeSystem.gd")
 
 const WORLD = {
   NORMAL=Color(0, 1, 0, 1),
@@ -51,6 +51,7 @@ func draw_needle():
   draw_polygon(points_arc, PoolColorArray([Color(0.7,0.0,0.7, 1)]))
 
 
-func _on_WorldSystem_new_world_alignment(new_alignment):
+func _on_WorldChangeSystem_new_world_alignment(new_alignment):
   alignment = new_alignment
   self.update()
+
