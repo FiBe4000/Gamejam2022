@@ -1,26 +1,27 @@
 extends Node2D
 
 var switchCount = 1
-
+# There is Normal, Dark, Fire, Ice worlds
+var worlds = [$Normal, $Dark, $Fire, $Ice]
+var activeWorld = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-  # NormalWorld2 is visible on even counts
-  # NormalWorld is visible on odd counts
-  _toggle_visibility()
+   _set_visibility()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #  pass
 
-func _toggle_visibility():
-  $NormalWorld.visible = switchCount % 2 == 1
-  $NormalWorld2.visible = switchCount % 2 == 0
-  
-  # Change tile collision layer to an unused layer
-  self._toggle_tilemap_collision($NormalWorld)
-  self._toggle_tilemap_collision($NormalWorld2)
-  
+func _set_visibility():
+  # Loop through all the worlds and set their visibility
+  for i in range(0, worlds.size()):
+    if i == activeWorld:
+      worlds[i].visible = true
+    else:
+      worlds[i].visible = false
+    self._toggle_tilemap_collision(worlds[i])
+
   
 # Take a tile map and set the collision layer to an unused layer if it is not visible
 func _toggle_tilemap_collision(tileMap):
@@ -30,5 +31,5 @@ func _toggle_tilemap_collision(tileMap):
     tileMap.collision_layer = 2
 
 func _on_WorldSwitchTimer_timeout():
-  switchCount += 1
-  _toggle_visibility()
+  self.activeWorld = (self.activeWorld + 1) % self.worlds.size()
+  self._set_visibility()
