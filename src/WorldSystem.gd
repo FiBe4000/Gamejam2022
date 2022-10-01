@@ -2,6 +2,7 @@ extends Node
 
 
 signal next_world_change
+signal new_world_alignment
 
 const WORLD = {
   NORMAL=Vector2(0,1),
@@ -29,7 +30,10 @@ func approach(world):
   world_alignment = world_alignment.rotated(rot)
   var new_world = get_aligned_world()
   if new_world != next_world:
-    emit_signal("next_world_change")
+    print(next_world," = ",new_world)
+    next_world = new_world
+    emit_signal("next_world_change", next_world)
+  emit_signal("new_world_alignment", world_alignment)
 
 func get_aligned_world():
   if world_alignment.x == 0 and world_alignment.y == 0:
@@ -46,8 +50,9 @@ func get_aligned_world():
     return WORLD.FIRE
 
 func within(ang, world, margin):
+  var tolerance = 0.00001
   var world_ang = world.angle()
-  return ang == clamp(ang, world_ang-margin, world_ang+margin)
+  return ang == clamp(ang, world_ang-margin-tolerance, world_ang+margin+tolerance)
 
 
 func _on_WorldSwitchTimer_timeout():
