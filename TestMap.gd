@@ -18,12 +18,12 @@ func _toggle_visibility():
   $NormalWorld2.visible = switchCount % 2 == 0
   
   # Change tile collision layer to an unused layer
-  self._set_tile_collision_layer($NormalWorld)
-  self._set_tile_collision_layer($NormalWorld2)
+  self._toggle_tilemap_collision($NormalWorld)
+  self._toggle_tilemap_collision($NormalWorld2)
   
   
 # Take a tile map and set the collision layer to an unused layer if it is not visible
-func _set_tile_collision_layer(tileMap):
+func _toggle_tilemap_collision(tileMap):
   if tileMap.visible:
     tileMap.collision_layer = 1
   else:
