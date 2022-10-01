@@ -5,11 +5,7 @@ signal frenemy_death
 
 
 export var hp = 1
-var parent = 1
-
-
-func body_enter(body):
-  print("AAAH")
+var parent
 
 
 func _draw():

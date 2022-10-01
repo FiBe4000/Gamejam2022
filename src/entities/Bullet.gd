@@ -1,8 +1,6 @@
 extends KinematicBody2D
 
 
-const Frenemy = preload("res://src/entities/Frenemy.gd")
-
 export var dmg = 2
 export var speed = 0
 export var dir = Vector2(1,0)
