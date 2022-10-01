@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="Gamejam2022"
-run/main_scene="res://src/TEST-Node2D.tscn"
+run/main_scene="res://src/Main.tscn"
 config/icon="res://icon.png"
 
 [gui]

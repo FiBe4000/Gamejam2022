@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/progressbar.gd" type="Script" id=1]
 [ext_resource path="res://src/TEST-Node2D.tscn" type="PackedScene" id=2]
+[ext_resource path="res://TestMap.tscn" type="PackedScene" id=3]
 
 [sub_resource type="OpenSimplexNoise" id=3]
 
@@ -13,6 +14,10 @@ noise_offset = Vector2( 0.01, 0 )
 
 [node name="Main" type="Node2D"]
 
+[node name="Map" parent="." instance=ExtResource( 3 )]
+position = Vector2( 203, 95 )
+scale = Vector2( 2, 2 )
+
 [node name="Player" parent="." instance=ExtResource( 2 )]
 
 [node name="WorldSwitchTimer" type="Timer" parent="."]
@@ -22,10 +27,10 @@ autostart = true
 [node name="HUD" type="CanvasLayer" parent="."]
 
 [node name="TimerVisualizer" type="TextureProgress" parent="HUD"]
-margin_left = 74.0
-margin_top = 59.0
-margin_right = 586.0
-margin_bottom = 571.0
+margin_left = -46.0
+margin_top = 48.0
+margin_right = 22.0
+margin_bottom = 114.0
 texture_progress = SubResource( 4 )
 tint_progress = Color( 0.101961, 0.643137, 0.129412, 1 )
 radial_initial_angle = 98.6
