@@ -1,6 +1,9 @@
 extends KinematicBody2D
 
 
+const Frenemy = preload("res://src/entities/Frenemy.gd")
+
+export var dmg = 2
 export var speed = 0
 export var dir = Vector2(1,0)
 export var started = false
@@ -16,7 +19,7 @@ func _physics_process(delta):
     var offset = speed * dir
     var collision = self.move_and_collide(delta*offset)
     if collision:
-      impact()
+      impact((collision as KinematicCollision2D).get_collider())
 
 
 func _draw():
@@ -38,5 +41,7 @@ func start(pos, direction, speed = self.speed):
     started = true
 
 
-func impact():
+func impact(body : KinematicBody2D):
+  if body.has_method("take_damage"):
+    body.take_damage(dmg)
   queue_free()

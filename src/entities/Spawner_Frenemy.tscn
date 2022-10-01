@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/entities/Spawner_Frenemy.gd" type="Script" id=1]
+
+[node name="Spawner_Frenemy" type="Node2D"]
+script = ExtResource( 1 )
