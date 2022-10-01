@@ -26,8 +26,8 @@ func _set_visibility():
 # Take a tile map and set the collision layer to an unused layer if it is not visible
 func _toggle_tilemap_collision(tileMap):
   if tileMap.visible:
-    tileMap.collision_layer = 1
-    tileMap.collision_mask  = 1
+    tileMap.collision_layer = 3
+    tileMap.collision_mask  = 3
   else:
     tileMap.collision_layer = 0
     tileMap.collision_mask  = 0
