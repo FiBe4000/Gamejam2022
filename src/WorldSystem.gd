@@ -30,7 +30,6 @@ func approach(world):
   world_alignment = world_alignment.rotated(rot)
   var new_world = get_aligned_world()
   if new_world != next_world:
-    print(next_world," = ",new_world)
     next_world = new_world
     emit_signal("next_world_change", next_world)
   emit_signal("new_world_alignment", world_alignment)
