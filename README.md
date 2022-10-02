@@ -20,3 +20,8 @@ Set git to use LF line endings,
 | 2     | Player                 |
 | 3     | Enemies                |
 | 4     | Projectiles (reserved) |
+
+### Physic process
+
+When using physics, always use the physics **delta time** to calculate physics in the game.
+In case the game lags it should compensate for the lag, by using the physics delta time.
