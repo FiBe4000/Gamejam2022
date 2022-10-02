@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://src/progressbar.gd" type="Script" id=1]
 [ext_resource path="res://src/entities/Player.tscn" type="PackedScene" id=2]
@@ -8,6 +8,24 @@
 [ext_resource path="res://src/WorldChangeSystem.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/HUD/CompassPlaceholder.gd" type="Script" id=7]
 [ext_resource path="res://src/WorldSwitchTimer.gd" type="Script" id=8]
+
+[sub_resource type="Shader" id=5]
+code = "shader_type canvas_item;
+void fragment(){
+  // Check whether we are inside a circle, remap UV coordinates to -1.0 to 1.0
+  vec2 pos = UV*2.0 - vec2(1.0);
+  vec2 sq = pos*pos;
+  if(sq.x + sq.y <= 1.0)
+  {
+    COLOR = texture(TEXTURE, UV);
+    COLOR += vec4(vec3(0.0, 0.3, 0.0), 0.0);
+  }
+  else
+    COLOR = vec4(0.0, 0.0, 0.0, 0.0);
+}"
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = SubResource( 5 )
 
 [sub_resource type="OpenSimplexNoise" id=3]
 
@@ -34,6 +52,7 @@ script = ExtResource( 8 )
 [node name="HUD" type="CanvasLayer" parent="."]
 
 [node name="TimerVisualizer" type="TextureProgress" parent="HUD"]
+material = SubResource( 6 )
 margin_left = 30.0
 margin_top = 79.0
 margin_right = 62.0

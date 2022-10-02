@@ -12,7 +12,7 @@ var synced = false
 func _ready():
   self.currentTime = 0.0
   self.maxTime = 10.0
-  self.value = 0.0
+  self.value = 100.0
   self.max_value = 100.0
   self.min_value = 0.0
   self.fill_mode = 4
@@ -34,6 +34,6 @@ func _input(event):
 
 func _on_WorldSwitchTimer_timeout():
   # Sync the progress bar to the world switch timer
-  self.currentTime = 0.0
+  #self.currentTime = 0.0
   self.value = 0.0
   self.synced = true
