@@ -5,6 +5,7 @@ signal shoot(sourceType, position, direction, speed, damage, size)
 export var speed = 500
 export var bullet_speed = 600
 export var rof = 20
+export var bullet_spread = 0.1
 
 var Bullet = preload("res://src/entities/Bullet.tscn")
 var last_shot = 0
@@ -76,7 +77,7 @@ func shoot():
     aim_dir = (mouse_pos - player_pos).normalized()
   
   # Add some uncertainty to the aim.
-  aim_dir += Vector2(rand_range(-0.1, 0.1), rand_range(-0.1, 0.1))
+  aim_dir += Vector2(rand_range(-spread, spread), rand_range(-spread, spread))
   
   var b = Bullet.instance()
   b.start(self.transform.origin, aim_dir, bullet_speed)
