@@ -14,8 +14,8 @@ var worlds = {
 var tilesets = {
   WS.World.NORMAL: "res://graphics/tilemaps/home_plane.tres",
   WS.World.DARK: "res://graphics/tilemaps/dark_plane_fixed_2.tres",
-  WS.World.FIRE: "res://graphics/tilemaps/dark_plane_fixed_2.tres",
-  WS.World.ICE: "res://graphics/tilemaps/home_plane.tres",
+  WS.World.FIRE: "res://graphics/tilemaps/fire_plane.tres",
+  WS.World.ICE: "res://graphics/tilemaps/fey_plane.tres",
  }
 var activeWorld = WS.World.NORMAL
 
