@@ -77,7 +77,7 @@ func shoot():
     aim_dir = (mouse_pos - player_pos).normalized()
   
   # Add some uncertainty to the aim.
-  aim_dir += Vector2(rand_range(-spread, spread), rand_range(-spread, spread))
+  aim_dir += Vector2(rand_range(-bullet_spread, bullet_spread), rand_range(-bullet_spread, bullet_spread))
   
   var b = Bullet.instance()
   b.start(self.transform.origin, aim_dir, bullet_speed)
