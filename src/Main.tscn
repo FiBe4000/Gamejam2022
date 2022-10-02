@@ -8,7 +8,8 @@
 [ext_resource path="res://src/WorldChangeSystem.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/HUD/CompassPlaceholder.gd" type="Script" id=7]
 [ext_resource path="res://src/WorldSwitchTimer.gd" type="Script" id=8]
-[ext_resource path="res://EnemyAISystem.tscn" type="PackedScene" id=9]
+[ext_resource path="res://src/entities/MobFactory.tscn" type="PackedScene" id=9]
+[ext_resource path="res://EnemyAISystem.tscn" type="PackedScene" id=10]
 
 [sub_resource type="Shader" id=5]
 code = "shader_type canvas_item;
@@ -74,7 +75,9 @@ position = Vector2( 456, 344 )
 
 [node name="WorldChangeSystem" parent="." instance=ExtResource( 6 )]
 
-[node name="EnemyAISystem" parent="." instance=ExtResource( 9 )]
+[node name="MobFactory" parent="." instance=ExtResource( 9 )]
+
+[node name="EnemyAISystem" parent="." instance=ExtResource( 10 )]
 
 [connection signal="timeout" from="WorldSwitchTimer" to="HUD/TimerVisualizer" method="_on_WorldSwitchTimer_timeout"]
 [connection signal="timeout" from="WorldSwitchTimer" to="WorldChangeSystem" method="_on_WorldSwitchTimer_timeout"]
