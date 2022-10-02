@@ -1,15 +1,20 @@
 extends KinematicBody2D
 
+const Behaviours = preload("res://src/systems/EnemyAISystem.gd")
+
 signal shoot(sourceType, position, direction, speed, damage, size)
 
 export var hit_points = 100
 var look_dir = Vector2(0,0)
 var dir = Vector2(0,0)
-var speed = 500
+var move_speed = 40
+var strafe_dir = 1
+var speed = 40
 var bullet_speed = 600
 var bullet_damage = 10
 var type = "normal"
-var behavior = "defensive"
+var behavior = [Behaviours.Behaviour_Move.STATIC]
+var desired_distance = 100
 
 var Bullet = preload("res://src/entities/Bullet.tscn")
 
@@ -59,8 +64,17 @@ func death():
 func get_mob_type():
   return type
 
-func get_mob_behavior():
+func get_mob_behaviour():
   return behavior
+
+func get_desired_distance():
+  return desired_distance
+
+func get_move_speed():
+  return move_speed
+
+func get_strafe_dir():
+  return strafe_dir
 
 func shoot(aim_dir):
   if aim_dir.x == 0 and aim_dir.y == 0:
