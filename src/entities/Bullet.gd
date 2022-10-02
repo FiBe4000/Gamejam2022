@@ -1,42 +1,42 @@
 extends KinematicBody2D
 
+signal hit
 
 export var speed = 0
-export var dir = Vector2(1,0)
+export var direction = Vector2(1,0)
 export var started = false
+
+var damage = 0
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-  pass # Replace with function body.
+  $AnimatedSprite.playing = true
+  show()
 
 
 func _physics_process(delta):
   if started:
-    var offset = speed * dir
+    var offset = speed * direction
     var collision = self.move_and_collide(delta*offset)
     if collision:
       impact()
 
+func start(position, direction, speed):
+    createAndShoot(position, direction, speed, 0, Vector2(0.3,0.3))
 
-func _draw():
-  var shape = self.get_node("CollisionShape2D")
-  var pos = shape.transform.origin
-  var rad = shape.shape.radius
-  var col = Color(0, 1, 0, 1)
-  draw_circle(pos, rad, col)
-
-
-func start(pos, direction, speed = self.speed):
-    position = pos
-    dir = direction
-    if dir.x == 0 and dir.y == 0:
-      dir = Vector2(1,0)
-    self.speed = speed
-    #rotation = direction
-    #velocity = Vector2(speed, 0).rotated(rotation)
-    started = true
-
+func createAndShoot(position, direction, speed, damage, scale):
+  self.position = position
+  self.direction = direction
+  if direction.x == 0 and direction.y == 0:
+    self.direction = Vector2(1,0)
+  self.rotation_degrees = direction.angle()
+  self.speed = speed
+  self.damage = damage
+  self.scale = scale
+  
+  started = true
+  
 
 func impact():
   queue_free()

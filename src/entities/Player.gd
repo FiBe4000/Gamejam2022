@@ -1,8 +1,9 @@
 extends KinematicBody2D
 
+signal shoot(sourceType, position, direction, speed, damage, size)
 
 export var speed = 500
-export var bullet_speed = 10
+export var bullet_speed = 600
 export var rof = 2
 
 var Bullet = preload("res://src/entities/Bullet.tscn")
@@ -71,3 +72,5 @@ func shoot():
   var b = Bullet.instance()
   b.start(self.transform.origin, aim_dir, bullet_speed)
   get_parent().add_child(b)
+  
+  emit_signal("shoot", "player", position, aim_dir, bullet_speed, 10, Vector2(0.5, 0.5))
