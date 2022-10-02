@@ -1,8 +1,10 @@
 extends Node
 
-# standar mobs interface:
+# standard mobs interface:
 # [Behaviour_Move] get_mob_behaviour()
 # int get_move_speed()
+# Mob.World get_mob_type()
+# int get_mob_value()
 
 
 enum Behaviour_Move {
@@ -66,9 +68,9 @@ func do_shootment():
   pass
 
 
-func _on_MobFactory_createevent(mob):
-  mobs = mobs[mob]
+func _on_MobFactory_mob_spawn(mob):
+  mobs += [mob]
 
 
-func _on_MobFactory_deathevent(mob):
+func _on_MobFactory_mob_died(mob):
   mobs.remove(mobs.find(mob))

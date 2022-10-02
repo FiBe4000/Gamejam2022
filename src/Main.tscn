@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://src/progressbar.gd" type="Script" id=1]
 [ext_resource path="res://src/entities/Player.tscn" type="PackedScene" id=2]
@@ -84,3 +84,6 @@ position = Vector2( 456, 344 )
 [connection signal="new_world_alignment" from="WorldChangeSystem" to="HUD/CompassPlaceholder/CompassPlaceholder" method="_on_WorldChangeSystem_new_world_alignment"]
 [connection signal="next_world_change" from="WorldChangeSystem" to="Map" method="_on_WorldChangeSystem_next_world_change"]
 [connection signal="world_discovery" from="WorldChangeSystem" to="HUD/CompassPlaceholder/CompassPlaceholder" method="_on_WorldChangeSystem_world_discovery"]
+[connection signal="mob_died" from="MobFactory" to="WorldChangeSystem" method="_on_MobFactory_mob_died"]
+[connection signal="mob_died" from="MobFactory" to="EnemyAISystem" method="_on_MobFactory_mob_died"]
+[connection signal="mob_spawn" from="MobFactory" to="EnemyAISystem" method="_on_MobFactory_mob_spawn"]

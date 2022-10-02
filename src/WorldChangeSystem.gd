@@ -82,8 +82,18 @@ func _input(event):
     approach(known_worlds[next_world_idx], 2*PI)
     _on_WorldSwitchTimer_timeout()
 
-func _on_MobFactory_deathevent(mob):
-  approach(mob.world, mob.ang_str)
+func _on_MobFactory_mob_died(mob):
+  var world = World.NORMAL
+  match(mob.get_mob_type()):
+    "normal":
+      world = World.NORMAL
+    "dark":
+      world = World.DARK
+    "fire":
+      world = World.FIRE
+    "ice":
+      world = World.ICE
+  approach(world, mob.hit_points/100)
 
 func _on_WorldSwitchTimer_timeout():
   if cur_world != next_world:

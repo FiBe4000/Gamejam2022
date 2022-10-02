@@ -1,5 +1,6 @@
 extends Node
 
+signal mob_spawn
 signal mob_died
 
 var MOB_MAX = 10
