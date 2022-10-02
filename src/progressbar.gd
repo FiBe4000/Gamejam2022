@@ -34,6 +34,6 @@ func _input(event):
 
 func _on_WorldSwitchTimer_timeout():
   # Sync the progress bar to the world switch timer
-  #self.currentTime = 0.0
+  self.currentTime = 0.0
   self.value = 0.0
   self.synced = true
