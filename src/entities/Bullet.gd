@@ -44,6 +44,7 @@ func handleCollision(collision):
   elif $TimeToLive.get_time_left() > 1.0:
     $TimeToLive.stop()
     $TimeToLive.set_wait_time(1.0)
+    $FlamingTail.process_material.initial_velocity = 100
     $TimeToLive.start()
 
 
