@@ -82,5 +82,6 @@ func shoot():
   var b = Bullet.instance()
   b.start(self.transform.origin, aim_dir, bullet_speed)
   get_parent().add_child(b)
+  b.z_index = 10
   
   emit_signal("shoot", "player", position, aim_dir, bullet_speed, 10, Vector2(0.5, 0.5))

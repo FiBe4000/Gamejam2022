@@ -18,7 +18,7 @@ func _physics_process(delta):
 func spawn(type, behavior):
   var mob_pos = new_mob_position()
   var mob = Mob.instance()
-  get_parent().add_child(mob)
+  self.add_child(mob)
   mob.init(mob_pos, type, behavior)
   
   # Temp, remove when AI is implemented
