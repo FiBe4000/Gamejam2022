@@ -2,9 +2,9 @@ extends KinematicBody2D
 
 signal shoot(sourceType, position, direction, speed, damage, scale)
 
-export var speed = 500
-export var bullet_speed = 600
-export var rof = 20
+export var speed = 200
+export var bullet_speed = 300
+export var rof = 2
 export var bullet_spread = 0.1
 
 var Bullet = preload("res://src/entities/Bullet.tscn")
@@ -26,7 +26,6 @@ func _physics_process(delta):
     shoot()
 
 func movement():
-  
   var dir = Vector2()
   dir.x -= Input.get_action_strength("move_left")
   dir.x += Input.get_action_strength("move_right")
@@ -79,4 +78,4 @@ func shoot():
   # Add some uncertainty to the aim.
   aim_dir += Vector2(rand_range(-bullet_spread, bullet_spread), rand_range(-bullet_spread, bullet_spread))
 
-  emit_signal("shoot", "Player", self.position, aim_dir, bullet_speed, 10, Vector2(1, 1))
+  emit_signal("shoot", "Player", self.position, aim_dir, bullet_speed, 10, Vector2(0.5, 0.5))

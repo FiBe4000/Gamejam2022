@@ -28,13 +28,12 @@ func createAndShoot(position, direction, speed, damage, scale, collisionMask):
   self.direction = direction
   if direction.x == 0 and direction.y == 0:
     self.direction = Vector2(1,0)
-  self.rotation_degrees = direction.angle()
+  self.rotation = direction.angle() + PI
   self.speed = speed
   self.damage = damage
   self.scale = scale
   self.collision_layer = 0
   self.collision_mask = collisionMask
-  $Particles2D.process_material.direction = -Vector3(self.direction.x, self.direction.y, 0.0)
   started = true
   
 func handleCollision(collision):
