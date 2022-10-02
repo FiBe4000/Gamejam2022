@@ -15,13 +15,17 @@ func _ready():
 func _physics_process(delta):
   var mobs = get_tree().get_nodes_in_group("mobs")
   if mobs.size() < MOB_MAX:
-    spawn("normal", [Behaviours.Behaviour_Move.KEEP_DISTANCE, Behaviours.Behaviour_Move.STRAFE])
+    spawn("normal", [Behaviours.Behaviour_Move.PATROL])
 
 func spawn(type, behavior):
   var mob_pos = new_mob_position()
   var mob = Mob.instance()
   get_parent().add_child(mob)
   mob.init(mob_pos, type, behavior)
+  var pool = (mob.patrol as PoolVector2Array)
+  pool.push_back(mob.position)
+  pool.push_back(mob.position + Vector2(150, 0))
+  mob.patrol = pool
   emit_signal("mob_spawn", mob)
   
   # Temp, remove when AI is implemented

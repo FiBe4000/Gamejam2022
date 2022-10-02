@@ -5,6 +5,9 @@ const Behaviours = preload("res://src/systems/EnemyAISystem.gd")
 signal shoot(sourceType, position, direction, speed, damage, size)
 
 export var hit_points = 100
+export var patrol = PoolVector2Array()
+
+var next_patrol = 0
 var look_dir = Vector2(0,0)
 var dir = Vector2(0,0)
 var move_speed = 40
@@ -75,6 +78,15 @@ func get_move_speed():
 
 func get_strafe_dir():
   return strafe_dir
+
+func get_next_patrol():
+  if patrol.size() > 0:
+    return patrol[next_patrol]
+  return self.position
+
+func advance_patrol():
+  next_patrol = (next_patrol + 1) % len(patrol)
+  print(next_patrol)
 
 func shoot(aim_dir):
   if aim_dir.x == 0 and aim_dir.y == 0:
