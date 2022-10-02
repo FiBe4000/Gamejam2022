@@ -5,10 +5,17 @@ const WS = preload("res://src/WorldChangeSystem.gd")
 
 # There is Normal, Dark, Fire, Ice worlds
 var worlds = {
-  WS.World.NORMAL.name: $Normal,
-  WS.World.DARK.name: $Dark,
-  WS.World.FIRE.name: $Fire,
-  WS.World.ICE.name: $Ice,
+  WS.World.NORMAL: $NormalLevel,
+  WS.World.DARK: $NormalLevel,
+  WS.World.FIRE: $NormalLevel,
+  WS.World.ICE: $NormalLevel,
+ }
+ 
+var tilesets = {
+  WS.World.NORMAL: "res://graphics/tilemaps/home_plane.tres",
+  WS.World.DARK: "res://graphics/tilemaps/dark_plane_fixed_2.tres",
+  WS.World.FIRE: "res://graphics/tilemaps/dark_plane_fixed_2.tres",
+  WS.World.ICE: "res://graphics/tilemaps/home_plane.tres",
  }
 var activeWorld = WS.World.NORMAL
 
@@ -23,13 +30,16 @@ func _ready():
 func _set_visibility():
   # Loop through all the worlds and set their visibility
   for k in worlds.keys():
-    var w = worlds[k]
     if worlds[k]:
-      if k == activeWorld.name:
-        w.visible = true
-      else:
-        w.visible = false
-      self._toggle_tilemap_collision(w)
+      if k == activeWorld:
+      # Loop through all the subnodes and set them to visible
+        for i in range(worlds[k].get_child_count()):
+          worlds[k].get_child(i).visible = true
+          # Set the tile map
+          if worlds[k].get_child(i).is_class("TileMap"):
+            worlds[k].get_child(i).set_tileset(load(tilesets[k]))
+
+      
 
 
 # Take a tile map and set the collision layer to an unused layer if it is not visible
