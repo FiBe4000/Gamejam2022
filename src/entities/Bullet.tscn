@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/entities/Bullet.gd" type="Script" id=1]
 [ext_resource path="res://graphics/skott1.png" type="Texture" id=2]
 [ext_resource path="res://graphics/skott3.png" type="Texture" id=3]
 [ext_resource path="res://graphics/skott2.png" type="Texture" id=4]
+[ext_resource path="res://graphics/particle.png" type="Texture" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -14,6 +15,32 @@ animations = [ {
 "name": "burn",
 "speed": 5.0
 } ]
+
+[sub_resource type="CanvasItemMaterial" id=3]
+blend_mode = 1
+
+[sub_resource type="Gradient" id=4]
+offsets = PoolRealArray( 0, 0.0157895, 0.0947368, 0.347368, 0.889474, 1 )
+colors = PoolColorArray( 1, 0.0862745, 0.00392157, 0, 1, 0.870588, 0.027451, 0.215686, 1, 0.795424, 0.0249763, 1, 0.980469, 0.305603, 0, 1, 0.917969, 0.231741, 0.125504, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=7]
+gradient = SubResource( 4 )
+
+[sub_resource type="ParticlesMaterial" id=6]
+lifetime_randomness = 0.28
+flag_disable_z = true
+spread = 15.97
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 512.31
+angular_velocity = 244.08
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+angle = 435.1
+angle_random = 0.48
+scale = 3.0
+scale_random = 1.0
+color_ramp = SubResource( 7 )
 
 [node name="Bullet" type="KinematicBody2D"]
 collision_layer = 2
@@ -27,3 +54,10 @@ shape = SubResource( 1 )
 frames = SubResource( 2 )
 animation = "burn"
 frame = 1
+
+[node name="Particles2D" type="Particles2D" parent="."]
+material = SubResource( 3 )
+amount = 30
+visibility_rect = Rect2( -250, -250, 500, 500 )
+process_material = SubResource( 6 )
+texture = ExtResource( 5 )
