@@ -20,6 +20,9 @@ var type = "normal"
 var behavior_move = [Behaviours.Behaviour_Move.STATIC]
 var behavior_shoot = [Behaviours.Behaviour_Shoot.FRIENDLY]
 var desired_distance = 100
+var rof = 2
+var last_shot = 0
+var shoot_cooldown = 0
 
 var Bullet = preload("res://src/entities/Bullet.tscn")
 
@@ -42,6 +45,9 @@ func _physics_process(delta):
   var vel = dir * speed
   self.move_and_slide(vel)
   select_animation(vel)
+  
+  shoot_cooldown = 1.0/rof
+  last_shot += delta
   
   #if Input.is_action_pressed("shoot"):
   #  shoot(Vector2(1,0))
@@ -124,10 +130,6 @@ func shoot(aim_dir):
     aim_dir = look_dir
   aim_dir = aim_dir.normalized()
   
-  var b = Bullet.instance()
-  b.start(self.transform.origin, aim_dir, bullet_speed)
-  get_parent().add_child(b)
-  
   match (type):
     "normal":
       $AnimatedSprite.animation = "attack_normal"
@@ -137,9 +139,11 @@ func shoot(aim_dir):
       $AnimatedSprite.animation = "attack_fire"
     "ice":
       $AnimatedSprite.animation = "attack_fey"
-  $AnimatedSprite.play()
   
-  emit_signal("shoot", "Mob", position, aim_dir, bullet_speed, bullet_damage, Vector2(0.5, 0.5))
+  if last_shot >= shoot_cooldown:
+    last_shot = 0
+    $AnimatedSprite.play()
+    emit_signal("shoot", "Mob", position, aim_dir, bullet_speed, bullet_damage, Vector2(0.3, 0.3))
 
 func set_type(type):
   self.type = type

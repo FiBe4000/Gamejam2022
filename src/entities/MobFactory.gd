@@ -20,6 +20,7 @@ func _physics_process(delta):
 func spawn(type, behaviour_move, behaviour_shoot):
   var mob_pos = new_mob_position()
   var mob = Mob.instance()
+  mob.connect("shoot", $BulletFactory, "_on_shoot")
   self.add_child(mob)
   mob.init(mob_pos, type, behaviour_move, behaviour_shoot)
   var pool = (mob.patrol as PoolVector2Array)
