@@ -131,8 +131,8 @@ func do_shootment(_delta):
     if behaviour.has(Behaviour_Shoot.FORWARD):
       aim_dir = mob.look_dir.normalized()
     
-    aim_dir.rotated(spread)
-    #mob.shoot(aim_dir)
+    aim_dir = aim_dir.rotated(spread)
+    mob.shoot(aim_dir)
 
 
 func _on_MobFactory_mob_spawn(mob):
