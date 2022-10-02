@@ -50,7 +50,7 @@ func do_movement(delta):
     
     var speed_sqr = pow(speed,2)
     var dir = Vector2()
-    var vel = 0
+    var move_speed = 0
     
     if behaviour.has(Behaviour_Move.PATROL):
       assert(not behaviour.has(Behaviour_Move.INTERCEPT), "ERROR: PATROL incompatible with INTERCEPT!")
@@ -62,10 +62,10 @@ func do_movement(delta):
       var dist = error.length()
       if dist < 5:
         mob.advance_patrol()
-      vel = dist
-      if speed < dist:
-        vel = speed / delta
-      #vel = speed
+      move_speed = speed
+      if dist < speed*delta:
+        move_speed = dist / delta
+      #move_speed = speed
       dir = error
     else:
       var tar_pos = player.position
@@ -84,17 +84,17 @@ func do_movement(delta):
       error = (tar_pos - mob.position) as Vector2
       var dist = error.length()
       dir = error
-      vel = dist
-      if speed < dist:
-        vel = speed / delta
-      #vel = speed
+      move_speed = speed
+      if dist < speed*delta:
+        move_speed = dist / delta
+      #move_speed = speed
       
       if behaviour.has(Behaviour_Move.STRAFE):
         assert(mob.has_method("get_strafe_dir"), "ERROR: Mob interface not fulfilled!")
         var strafe_dir = mob.get_strafe_dir()
-        dir = dir + dir.normalized().rotated(PI/2 * strafe_dir) * vel
+        dir = dir + dir.normalized().rotated(PI/2 * strafe_dir) * move_speed
     
-    mob.move(dir.normalized(), vel)
+    mob.move(dir.normalized(), move_speed)
 
 
 func do_shootment(_delta):
@@ -130,7 +130,6 @@ func do_shootment(_delta):
     
     if behaviour.has(Behaviour_Shoot.FORWARD):
       aim_dir = mob.look_dir.normalized()
-    
     
     aim_dir.rotated(spread)
     #mob.shoot(aim_dir)
