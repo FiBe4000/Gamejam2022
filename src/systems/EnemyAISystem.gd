@@ -18,7 +18,7 @@ enum Behaviour_Shoot {
   FRIENDLY, # No behaviours functionally equivalent, but friendly mobs should override other behaviours
   AIM, # Targets player; get_aim_spread()
   INTERCEPT, # Treats players projected position as position used for other behaviours
-  FORWARD, # get_aim_dir(); get_aim_spread(); mutually exclusive to AIM
+  FORWARD, # get_aim_dir(); get_aim_spread(); mutually exclusive to AIM and INTERCEPT
  }
 
 
@@ -33,14 +33,16 @@ func _ready():
 
 func _physics_process(delta):
   do_movement(delta)
+  do_shootment(delta)
 
 
-func do_movement(_delta):
+func do_movement(delta):
   for mob in mobs:
-    assert(mob.has_method("get_mob_behaviour"), "ERROR: Mob interface not fulfilled!")
+    assert(mob.has_method("move"), "ERROR: Mob interface not fulfilled!")
+    assert(mob.has_method("get_mob_move_behaviour"), "ERROR: Mob interface not fulfilled!")
     assert(mob.has_method("get_move_speed"), "ERROR: Mob interface not fulfilled!")
     
-    var behaviour = mob.get_mob_behaviour()
+    var behaviour = mob.get_mob_move_behaviour()
     var speed = mob.get_move_speed()
     
     if behaviour.has(Behaviour_Move.STATIC):
@@ -60,10 +62,10 @@ func do_movement(_delta):
       var dist = error.length()
       if dist < 5:
         mob.advance_patrol()
-      #vel = dist
-      #if speed < dist:
-      #  vel = speed
-      vel = speed
+      vel = dist
+      if speed < dist:
+        vel = speed / delta
+      #vel = speed
       dir = error
     else:
       var tar_pos = player.position
@@ -82,10 +84,10 @@ func do_movement(_delta):
       error = (tar_pos - mob.position) as Vector2
       var dist = error.length()
       dir = error
-      #vel = dist
-      #if speed < dist:
-      # vel = speed
-      vel = speed
+      vel = dist
+      if speed < dist:
+        vel = speed / delta
+      #vel = speed
       
       if behaviour.has(Behaviour_Move.STRAFE):
         assert(mob.has_method("get_strafe_dir"), "ERROR: Mob interface not fulfilled!")
@@ -95,8 +97,43 @@ func do_movement(_delta):
     mob.move(dir.normalized(), vel)
 
 
-func do_shootment():
-  pass
+func do_shootment(_delta):
+  for mob in mobs:
+    assert(mob.has_method("shoot"), "ERROR: Mob interface not fulfilled!")
+    assert(mob.has_method("get_mob_shoot_behaviour"), "ERROR: Mob interface not fulfilled!")
+    assert(mob.has_method("get_shoot_speed"), "ERROR: Mob interface not fulfilled!")
+    assert(mob.has_method("get_shoot_spread"), "ERROR: Mob interface not fulfilled!")
+    
+    var behaviour = mob.get_mob_shoot_behaviour()
+    var speed = mob.get_shoot_speed()
+    var spread = mob.get_shoot_spread() / 2
+    spread = rand_range(-spread, spread)
+    
+    if behaviour.has(Behaviour_Shoot.FRIENDLY):
+      continue
+    
+    var speed_sqr = pow(speed,2)
+    var aim_dir = Vector2()
+    
+    var tar_pos = player.position
+    var error = (tar_pos - mob.position) as Vector2
+    var dist_sqr = error.length_squared()
+    if behaviour.has(Behaviour_Shoot.INTERCEPT):
+      assert(not behaviour.has(Behaviour_Shoot.FORWARD), "ERROR: INTERCEPT incompatible with FORWARD!")
+      var eta = dist_sqr / speed_sqr
+      tar_pos = tar_pos + player.speed * eta
+      error = (tar_pos - mob.position) as Vector2
+    
+    if behaviour.has(Behaviour_Shoot.AIM):
+      assert(not behaviour.has(Behaviour_Shoot.FORWARD), "ERROR: AIM incompatible with FORWARD!")
+      aim_dir = error.normalized()
+    
+    if behaviour.has(Behaviour_Shoot.FORWARD):
+      aim_dir = mob.look_dir.normalized()
+    
+    
+    aim_dir.rotated(spread)
+    mob.shoot(aim_dir)
 
 
 func _on_MobFactory_mob_spawn(mob):

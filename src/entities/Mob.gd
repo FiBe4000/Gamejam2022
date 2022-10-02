@@ -14,9 +14,11 @@ var move_speed = 40
 var strafe_dir = 1
 var speed = 40
 var bullet_speed = 600
+var bullet_spread = PI/4
 var bullet_damage = 10
 var type = "normal"
-var behavior = [Behaviours.Behaviour_Move.STATIC]
+var behavior_move = [Behaviours.Behaviour_Move.STATIC]
+var behavior_shoot = [Behaviours.Behaviour_Shoot.FRIENDLY]
 var desired_distance = 100
 
 var Bullet = preload("res://src/entities/Bullet.tscn")
@@ -26,10 +28,11 @@ func _ready():
   set_type("normal")
   pass # Replace with function body.
   
-func init(pos, type, behavior):
+func init(pos, type, behavior_move, behavior_shoot):
   position = pos
   self.type = type
-  self.behavior = behavior
+  self.behavior_move = behavior_move
+  self.behavior_shoot = behavior_shoot
   set_type(self.type)
 
 func _physics_process(delta):
@@ -87,14 +90,23 @@ func death():
 func get_mob_type():
   return type
 
-func get_mob_behaviour():
-  return behavior
+func get_mob_move_behaviour():
+  return behavior_move
+  
+func get_mob_shoot_behaviour():
+  return behavior_shoot
 
 func get_desired_distance():
   return desired_distance
 
 func get_move_speed():
   return move_speed
+  
+func get_shoot_speed():
+  return bullet_speed
+  
+func get_shoot_spread():
+  return bullet_spread
 
 func get_strafe_dir():
   return strafe_dir
@@ -106,7 +118,6 @@ func get_next_patrol():
 
 func advance_patrol():
   next_patrol = (next_patrol + 1) % len(patrol)
-  print(next_patrol)
 
 func shoot(aim_dir):
   if aim_dir.x == 0 and aim_dir.y == 0:
