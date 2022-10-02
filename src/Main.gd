@@ -36,3 +36,4 @@ func _on_PlayerScene_hit():
 
 func _on_HUD_start_game():
   new_game()
+  

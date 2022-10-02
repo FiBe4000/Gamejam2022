@@ -4,7 +4,8 @@ signal shoot(sourceType, position, direction, speed, damage, size)
 
 export var speed = 500
 export var bullet_speed = 600
-export var rof = 2
+export var rof = 20
+export var bullet_spread = 0.1
 
 var Bullet = preload("res://src/entities/Bullet.tscn")
 var last_shot = 0
@@ -68,6 +69,15 @@ func shoot():
   if aim_dir.x == 0 and aim_dir.y == 0:
     aim_dir = look_dir
   aim_dir = aim_dir.normalized()
+  
+  # Get aim direction from player to mouse, if mouse is down.
+  if(Input.is_mouse_button_pressed(BUTTON_LEFT)):
+    var mouse_pos = get_global_mouse_position()
+    var player_pos = get_global_position()
+    aim_dir = (mouse_pos - player_pos).normalized()
+  
+  # Add some uncertainty to the aim.
+  aim_dir += Vector2(rand_range(-bullet_spread, bullet_spread), rand_range(-bullet_spread, bullet_spread))
   
   var b = Bullet.instance()
   b.start(self.transform.origin, aim_dir, bullet_speed)
