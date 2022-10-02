@@ -16,10 +16,13 @@ func _on_shoot(sourceType, pos, dir, speed, damage, scale):
     _:
       sourceCollisionLayer = 0
       
-  var collisionMask = inverse_mask_for_layer(sourceCollisionLayer)
+  var collisionMask : int = inverse_mask_for_layer(sourceCollisionLayer)
+  # Layer 5 is water which we do not want to hit with bullets
+  collisionMask = collisionMask & ~(1 << 4)
   var newBullet = Bullet.instance()
   newBullet.createAndShoot(pos, dir, speed, damage, scale, collisionMask)
   self.add_child(newBullet)
+  newBullet.z_index = 4
 
 func inverse_mask_for_layer(layer):
   if layer == 0:

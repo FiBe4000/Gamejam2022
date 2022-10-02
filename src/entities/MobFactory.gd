@@ -27,6 +27,7 @@ func spawn(type, behaviour_move, behaviour_shoot):
   pool.push_back(mob.position)
   pool.push_back(mob.position + Vector2(150, 0))
   mob.patrol = pool
+  mob.z_index = 4
   emit_signal("mob_spawn", mob)
 
 func new_mob_position():

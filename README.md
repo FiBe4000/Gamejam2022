@@ -20,6 +20,7 @@ Set git to use LF line endings,
 | 2     | Player                 |
 | 3     | Enemies                |
 | 4     | Projectiles (reserved) |
+| 5     | Water                  |
 
 ### Physic process
 
