@@ -9,7 +9,6 @@ var worlds = {
   WS.WORLD.DARK: $Dark,
   WS.WORLD.FIRE: $Fire,
   WS.WORLD.ICE: $Ice,
-  WS.WORLD.VOID: $Void,
  }
 var activeWorld = WS.WORLD.NORMAL
 

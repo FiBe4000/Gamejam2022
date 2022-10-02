@@ -9,7 +9,6 @@ const WORLD = {
   DARK=Vector2(0,-1),
   ICE=Vector2(-1,0),
   FIRE=Vector2(1,0),
-  VOID=Vector2()
  }
 
 export var step_size = (PI/4)/4
@@ -35,8 +34,6 @@ func approach(world):
   emit_signal("new_world_alignment", world_alignment)
 
 func get_aligned_world():
-  if world_alignment.x == 0 and world_alignment.y == 0:
-    return WORLD.VOID
   var ang = world_alignment.angle()
   var margin = PI/4
   if within(ang, WORLD.NORMAL, margin):
