@@ -35,19 +35,39 @@ func _physics_process(delta):
   
   var vel = dir * speed
   self.move_and_slide(vel)
+  select_animation(vel)
   
+  #if Input.is_action_pressed("shoot"):
+  #  shoot(Vector2(1,0))
+
+func select_animation(vel):
   if vel.length() > 0:
+    match (type):
+      "normal":
+        $AnimatedSprite.animation = "walk_normal"
+      "dark":
+        $AnimatedSprite.animation = "walk_dark"
+      "fire":
+        $AnimatedSprite.animation = "walk_fire"
+      "ice":
+        $AnimatedSprite.animation = "walk_ice"
     $AnimatedSprite.play()
   else:
-    $AnimatedSprite.stop()
+    match (type):
+      "normal":
+        $AnimatedSprite.animation = "idle_normal"
+      "dark":
+        $AnimatedSprite.animation = "idle_dark"
+      "fire":
+        $AnimatedSprite.animation = "idle_fire"
+      "ice":
+        $AnimatedSprite.animation = "idle_ice"
+    $AnimatedSprite.play()
   
   if dir.x != 0:
     $AnimatedSprite.flip_v = false
     $AnimatedSprite.flip_h = dir.x > 0
-  
-  if Input.is_action_pressed("shoot"):
-    shoot(Vector2(1,0))
-    
+
 func move(dir, speed):
   self.dir = dir
   self.speed = speed
@@ -84,32 +104,39 @@ func shoot(aim_dir):
   var b = Bullet.instance()
   b.start(self.transform.origin, aim_dir, bullet_speed)
   get_parent().add_child(b)
+  
+  match (type):
+    "normal":
+      $AnimatedSprite.animation = "attack_normal"
+    "dark":
+      $AnimatedSprite.animation = "attack_dark"
+    "fire":
+      $AnimatedSprite.animation = "attack_fire"
+    "ice":
+      $AnimatedSprite.animation = "attack_ice"
+  $AnimatedSprite.play()
+  
   emit_signal("shoot", "Mob", position, aim_dir, bullet_speed, bullet_damage, Vector2(0.5, 0.5))
 
 func set_type(type):
-  match (type):
+  self.type = type
+  match (self.type):
     "normal":
-      $AnimatedSprite.animation = "walk_normal"
+      disable_collision()
       $NormalTypeCollisionShape2D.disabled = false
-      $DarkTypeCollisionShape2D.disabled = true
-      $FireTypeCollisionShape2D.disabled = true
-      $IceTypeCollisionShape2D.disabled = true
     "dark":
-      $AnimatedSprite.animation = "walk_dark"
-      $NormalTypeCollisionShape2D.disabled = true
+      disable_collision()
       $DarkTypeCollisionShape2D.disabled = false
-      $FireTypeCollisionShape2D.disabled = true
-      $IceTypeCollisionShape2D.disabled = true
     "fire":
-      $AnimatedSprite.animation = "walk_fire"
-      $NormalTypeCollisionShape2D.disabled = true
-      $DarkTypeCollisionShape2D.disabled = true
+      disable_collision()
       $FireTypeCollisionShape2D.disabled = false
-      $IceTypeCollisionShape2D.disabled = true
     "ice":
-      $AnimatedSprite.animation = "walk_ice"
-      $NormalTypeCollisionShape2D.disabled = true
-      $DarkTypeCollisionShape2D.disabled = true
-      $FireTypeCollisionShape2D.disabled = true
+      disable_collision()
       $IceTypeCollisionShape2D.disabled = false
       
+func disable_collision():
+      $NormalTypeCollisionShape2D.disabled = true
+      $DarkTypeCollisionShape2D.disabled = true
+      $FireTypeCollisionShape2D.disabled = true
+      $IceTypeCollisionShape2D.disabled = true
+  

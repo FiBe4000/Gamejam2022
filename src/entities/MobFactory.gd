@@ -23,14 +23,11 @@ func spawn(type, behavior):
   self.add_child(mob)
   mob.init(mob_pos, type, behavior)
   emit_signal("mob_spawn", mob)
-  
-  # Temp, remove when AI is implemented
-  #mob.move(Vector2(1,0), 40)
 
 func new_mob_position():
   var pos = Vector2(rand_range(100, 400), rand_range(100, 400))
   return pos
-  
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #  pass
