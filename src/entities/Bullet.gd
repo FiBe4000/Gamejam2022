@@ -8,13 +8,15 @@ export var started = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-  pass # Replace with function body.
+  $AnimatedSprite.play()
+  self.scale.x = 0.2
+  self.scale.y = 0.2
 
 
 func _physics_process(delta):
   if started:
     var offset = speed * dir
-    var collision = self.move_and_collide(delta*offset)
+    var collision = self.move_and_collide(offset)
     if collision:
       impact()
 
