@@ -69,6 +69,13 @@ func shoot():
     aim_dir = look_dir
   aim_dir = aim_dir.normalized()
   
+  # Get aim direction from player to mouse, if mouse is down.
+  if(Input.is_mouse_button_pressed(BUTTON_LEFT)):
+    var mouse_pos = get_global_mouse_position()
+    var player_pos = get_global_position()
+    aim_dir = (mouse_pos - player_pos).normalized()
+  
+  
   var b = Bullet.instance()
   b.start(self.transform.origin, aim_dir, bullet_speed)
   get_parent().add_child(b)
