@@ -14,7 +14,7 @@ const WORLD = {
 export var step_size = (PI/4)/4
 
 var next_world = WORLD.NORMAL
-var world_alignment = Vector2(0,1)
+var world_alignment = next_world
 
 
 func _ready():
