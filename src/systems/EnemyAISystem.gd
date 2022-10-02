@@ -30,8 +30,15 @@ func _ready():
   player = self.get_node("../Player")
 
 
-func do_movement():
+func _physics_process(delta):
+  do_movement(delta)
+
+
+func do_movement(_delta):
   for mob in mobs:
+    assert(mob.has_method("get_mob_behaviour"), "ERROR: Mob interface not fulfilled!")
+    assert(mob.has_method("get_move_speed"), "ERROR: Mob interface not fulfilled!")
+    
     var behaviour = mob.get_mob_behaviour()
     
     if behaviour.has(Behaviour_Move.STATIC):
@@ -45,23 +52,29 @@ func do_movement():
     if behaviour.has(Behaviour_Move.INTERCEPT):
       var eta = dist_sqr / speed_sqr
       tar_pos = tar_pos + player.speed * eta
+      error = (tar_pos - mob.position) as Vector2
     
     var dir = Vector2()
     var vel = 0
     if behaviour.has(Behaviour_Move.KEEP_DISTANCE):
+      assert(mob.has_method("get_desired_distance"), "ERROR: Mob interface not fulfilled!")
       var desired_dist = mob.get_desired_distance()
-      dir = error
-      if dist_sqr < pow(desired_dist,2):
-        dir = -dir
-      vel = dist_sqr
-      if speed_sqr < dist_sqr:
-        vel = speed
+      tar_pos = tar_pos - error.normalized() * desired_dist
+      
+    error = (tar_pos - mob.position) as Vector2
+    var dist = error.length()
+    dir = error
+    vel = dist
+    if speed < dist:
+      vel = speed
     
     if behaviour.has(Behaviour_Move.STRAFE):
+      assert(mob.has_method("get_strafe_dir"), "ERROR: Mob interface not fulfilled!")
       var strafe_dir = mob.get_strafe_dir()
-      dir.rotated(PI/2 * strafe_dir)
+      dir = dir + dir.normalized().rotated(PI/2 * strafe_dir) * speed
     
-    mob.move(dir, vel)
+    print(vel)
+    mob.move(dir.normalized(), speed)
 
 
 func do_shootment():
