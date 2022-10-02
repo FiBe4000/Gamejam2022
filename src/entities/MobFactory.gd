@@ -12,7 +12,7 @@ func _ready():
 func _physics_process(delta):
   var mobs = get_tree().get_nodes_in_group("mobs")
   if mobs.size() < MOB_MAX:
-    spawn("dark", "defensive")
+    spawn("normal", "defensive")
 
 func spawn(type, behavior):
   var mob_pos = new_mob_position()

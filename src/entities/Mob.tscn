@@ -35,20 +35,20 @@ animations = [ {
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
-radius = 51.0
-height = 30.0
+radius = 13.0
+height = 24.0
 
 [sub_resource type="CapsuleShape2D" id=4]
-radius = 49.0
-height = 36.0
+radius = 13.0
+height = 24.0
 
 [sub_resource type="CapsuleShape2D" id=3]
-radius = 46.0
-height = 26.0
+radius = 14.0
+height = 24.0
 
 [sub_resource type="CapsuleShape2D" id=5]
-radius = 49.0
-height = 44.0
+radius = 14.0
+height = 24.0
 
 [node name="Mob" type="KinematicBody2D" groups=["mobs"]]
 script = ExtResource( 1 )
@@ -56,8 +56,7 @@ script = ExtResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 3, 3 )
 frames = SubResource( 1 )
-animation = "walk_ice"
-frame = 1
+animation = "walk_normal"
 playing = true
 
 [node name="NormalTypeCollisionShape2D" type="CollisionShape2D" parent="."]
