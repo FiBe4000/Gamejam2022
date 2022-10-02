@@ -35,15 +35,16 @@ func approach(world):
 
 func get_aligned_world():
   var ang = world_alignment.angle()
-  var margin = PI/4
-  if within(ang, WORLD.NORMAL, margin):
-    return WORLD.NORMAL
-  if within(ang, WORLD.DARK, margin):
-    return WORLD.DARK
-  if within(ang, WORLD.ICE, margin):
-    return WORLD.ICE
-  if within(ang, WORLD.FIRE, margin):
-    return WORLD.FIRE
+  # Take the dot product of the world alignement and the world vectors
+  # to find the closest world
+  var best_world = WORLD.NORMAL
+  var best_dot = 0
+  for w in WORLD.values():
+    var dot = w.dot(world_alignment)
+    if dot > best_dot:
+      best_dot = dot
+      best_world = w
+  return best_world
 
 func within(ang, world, margin):
   var tolerance = 0.00001
