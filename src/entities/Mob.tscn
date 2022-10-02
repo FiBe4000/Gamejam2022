@@ -5,8 +5,8 @@
 [ext_resource path="res://graphics/enemies/normal/normalMookWalk1.png" type="Texture" id=3]
 [ext_resource path="res://graphics/enemySwimming_2.png" type="Texture" id=4]
 [ext_resource path="res://graphics/enemySwimming_1.png" type="Texture" id=5]
-[ext_resource path="res://graphics/enemyFlyingAlt_1.png" type="Texture" id=6]
-[ext_resource path="res://graphics/enemyFlyingAlt_2.png" type="Texture" id=7]
+[ext_resource path="res://graphics/enemies/fire/fireMookWalk1.png" type="Texture" id=6]
+[ext_resource path="res://graphics/enemies/fire/fireMookWalk2.png" type="Texture" id=7]
 [ext_resource path="res://graphics/enemies/normal/normalMookWalk2.png" type="Texture" id=8]
 [ext_resource path="res://graphics/enemies/dark/darkMookWalk1.png" type="Texture" id=9]
 
@@ -54,9 +54,10 @@ height = 44.0
 script = ExtResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-scale = Vector2( 5, 5 )
+scale = Vector2( 3, 3 )
 frames = SubResource( 1 )
 animation = "walk_ice"
+frame = 1
 playing = true
 
 [node name="NormalTypeCollisionShape2D" type="CollisionShape2D" parent="."]
