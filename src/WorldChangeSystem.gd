@@ -82,8 +82,8 @@ func _input(event):
     approach(known_worlds[next_world_idx], 2*PI)
     _on_WorldSwitchTimer_timeout()
 
-func _on_MobFactory_deathevent(world, ang_str):
-  approach(world, ang_str)
+func _on_MobFactory_deathevent(mob):
+  approach(mob.world, mob.ang_str)
 
 func _on_WorldSwitchTimer_timeout():
   if cur_world != next_world:
