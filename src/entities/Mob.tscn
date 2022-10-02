@@ -1,10 +1,10 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://src/entities/Mob.gd" type="Script" id=1]
 [ext_resource path="res://graphics/enemies/dark/darkMookWalk2.png" type="Texture" id=2]
 [ext_resource path="res://graphics/enemies/normal/normalMookWalk1.png" type="Texture" id=3]
-[ext_resource path="res://graphics/enemySwimming_2.png" type="Texture" id=4]
-[ext_resource path="res://graphics/enemySwimming_1.png" type="Texture" id=5]
+[ext_resource path="res://graphics/enemies/fey/feyMookAttack.png" type="Texture" id=4]
+[ext_resource path="res://graphics/enemies/fey/feyMookIdle.png" type="Texture" id=5]
 [ext_resource path="res://graphics/enemies/fire/fireMookWalk1.png" type="Texture" id=6]
 [ext_resource path="res://graphics/enemies/fire/fireMookWalk2.png" type="Texture" id=7]
 [ext_resource path="res://graphics/enemies/normal/normalMookWalk2.png" type="Texture" id=8]
@@ -15,6 +15,8 @@
 [ext_resource path="res://graphics/enemies/dark/darkMookAttack.png" type="Texture" id=13]
 [ext_resource path="res://graphics/enemies/fire/fireMookAttack.png" type="Texture" id=14]
 [ext_resource path="res://graphics/enemies/fire/fireMookIdle.png" type="Texture" id=15]
+[ext_resource path="res://graphics/enemies/fey/feyMookWalk2.png" type="Texture" id=16]
+[ext_resource path="res://graphics/enemies/fey/feyMookWalk1.png" type="Texture" id=17]
 
 [sub_resource type="SpriteFrames" id=1]
 resource_local_to_scene = true
@@ -24,14 +26,14 @@ animations = [ {
 "name": "attack_dark",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "attack_fey",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 14 ) ],
 "loop": true,
 "name": "attack_fire",
-"speed": 5.0
-}, {
-"frames": [  ],
-"loop": true,
-"name": "attack_ice",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 11 ) ],
@@ -44,14 +46,14 @@ animations = [ {
 "name": "idle_dark",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "idle_fey",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 15 ) ],
 "loop": true,
 "name": "idle_fire",
-"speed": 5.0
-}, {
-"frames": [  ],
-"loop": true,
-"name": "idle_ice",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 12 ) ],
@@ -64,14 +66,14 @@ animations = [ {
 "name": "walk_dark",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 17 ), ExtResource( 16 ) ],
+"loop": true,
+"name": "walk_fey",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
 "loop": true,
 "name": "walk_fire",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 5 ), ExtResource( 4 ) ],
-"loop": true,
-"name": "walk_ice",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 3 ), ExtResource( 8 ) ],
@@ -102,7 +104,7 @@ script = ExtResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 3, 3 )
 frames = SubResource( 1 )
-animation = "idle_ice"
+animation = "idle_fey"
 playing = true
 
 [node name="NormalTypeCollisionShape2D" type="CollisionShape2D" parent="."]
@@ -117,6 +119,6 @@ disabled = true
 shape = SubResource( 3 )
 disabled = true
 
-[node name="IceTypeCollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="FeyTypeCollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 5 )
 disabled = true

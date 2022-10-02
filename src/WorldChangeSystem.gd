@@ -26,6 +26,7 @@ func _ready():
   add_world(World.NORMAL)
   add_world(World.DARK)
   add_world(World.ICE)
+  add_world(World.FIRE)
   emit_signal("next_world_change", next_world)
   emit_signal("new_world_alignment", world_alignment)
 

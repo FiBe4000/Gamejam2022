@@ -56,7 +56,7 @@ func select_animation(vel):
       "fire":
         $AnimatedSprite.animation = "walk_fire"
       "ice":
-        $AnimatedSprite.animation = "walk_ice"
+        $AnimatedSprite.animation = "walk_fey"
     $AnimatedSprite.play()
   else:
     match (type):
@@ -67,7 +67,7 @@ func select_animation(vel):
       "fire":
         $AnimatedSprite.animation = "idle_fire"
       "ice":
-        $AnimatedSprite.animation = "idle_ice"
+        $AnimatedSprite.animation = "idle_fey"
     $AnimatedSprite.play()
   
   if dir.x != 0:
@@ -136,7 +136,7 @@ func shoot(aim_dir):
     "fire":
       $AnimatedSprite.animation = "attack_fire"
     "ice":
-      $AnimatedSprite.animation = "attack_ice"
+      $AnimatedSprite.animation = "attack_fey"
   $AnimatedSprite.play()
   
   emit_signal("shoot", "Mob", position, aim_dir, bullet_speed, bullet_damage, Vector2(0.5, 0.5))
@@ -155,11 +155,11 @@ func set_type(type):
       $FireTypeCollisionShape2D.disabled = false
     "ice":
       disable_collision()
-      $IceTypeCollisionShape2D.disabled = false
+      $FeyTypeCollisionShape2D.disabled = false
       
 func disable_collision():
       $NormalTypeCollisionShape2D.disabled = true
       $DarkTypeCollisionShape2D.disabled = true
       $FireTypeCollisionShape2D.disabled = true
-      $IceTypeCollisionShape2D.disabled = true
+      $FeyTypeCollisionShape2D.disabled = true
   
