@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://src/progressbar.gd" type="Script" id=1]
 [ext_resource path="res://src/entities/Player.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://src/WorldSwitchTimer.gd" type="Script" id=8]
 [ext_resource path="res://src/entities/MobFactory.tscn" type="PackedScene" id=9]
 [ext_resource path="res://EnemyAISystem.tscn" type="PackedScene" id=10]
+[ext_resource path="res://src/HUD/HUD.tscn" type="PackedScene" id=11]
 
 [sub_resource type="Shader" id=5]
 code = "shader_type canvas_item;
@@ -80,6 +81,9 @@ position = Vector2( 764, 509 )
 
 [node name="EnemyAISystem" parent="." instance=ExtResource( 10 )]
 
+[node name="HUD_Scene" parent="." instance=ExtResource( 11 )]
+
+[connection signal="death" from="Player" to="HUD_Scene" method="_on_Player_death"]
 [connection signal="timeout" from="WorldSwitchTimer" to="HUD/TimerVisualizer" method="_on_WorldSwitchTimer_timeout"]
 [connection signal="timeout" from="WorldSwitchTimer" to="WorldChangeSystem" method="_on_WorldSwitchTimer_timeout"]
 [connection signal="new_world_alignment" from="WorldChangeSystem" to="HUD/CompassPlaceholder/CompassPlaceholder" method="_on_WorldChangeSystem_new_world_alignment"]

@@ -1,16 +1,19 @@
 extends KinematicBody2D
 
 signal shoot(sourceType, position, direction, speed, damage, scale)
-
-export var speed = 200
-export var bullet_speed = 300
-export var rof = 2
-export var bullet_spread = 0.1
+signal death()
 
 var Bullet = preload("res://src/entities/Bullet.tscn")
-var last_shot = 0
-var look_dir = Vector2(1,0)
 
+var look_dir = Vector2(1,0)
+var speed = 200
+
+var bullet_speed = 300
+var bullet_spread = 0.1
+var rof = 2
+var last_shot = 0
+
+var health = 100
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -52,8 +55,13 @@ func _on_Player_body_entered(body):
   emit_signal("hit")
   
 func hit(damage):
-  pass
-      
+  health = max(0, (health - damage))
+  if health <= 0:
+    emit_signal("death")
+
+func get_health():
+  return self.health
+
 func start(pos):
   self.position = pos
   show()
