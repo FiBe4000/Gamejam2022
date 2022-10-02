@@ -15,7 +15,7 @@ func _ready():
 func _physics_process(delta):
   var mobs = get_tree().get_nodes_in_group("mobs")
   if mobs.size() < MOB_MAX:
-    spawn("normal", [Behaviours.Behaviour_Move.KEEP_DISTANCE, Behaviours.Behaviour_Move.STRAFE])
+    spawn("fey", [Behaviours.Behaviour_Move.KEEP_DISTANCE, Behaviours.Behaviour_Move.STRAFE])
 
 func spawn(type, behavior):
   var mob_pos = new_mob_position()
