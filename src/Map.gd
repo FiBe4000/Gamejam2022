@@ -5,12 +5,12 @@ const WS = preload("res://src/WorldChangeSystem.gd")
 
 # There is Normal, Dark, Fire, Ice worlds
 var worlds = {
-  WS.WORLD.NORMAL: $Normal,
-  WS.WORLD.DARK: $Dark,
-  WS.WORLD.FIRE: $Fire,
-  WS.WORLD.ICE: $Ice,
+  WS.World.NORMAL.name: $Normal,
+  WS.World.DARK.name: $Dark,
+  WS.World.FIRE.name: $Fire,
+  WS.World.ICE.name: $Ice,
  }
-var activeWorld = WS.WORLD.NORMAL
+var activeWorld = WS.World.NORMAL
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -23,12 +23,13 @@ func _ready():
 func _set_visibility():
   # Loop through all the worlds and set their visibility
   for k in worlds.keys():
+    var w = worlds[k]
     if worlds[k]:
-      if k == activeWorld:
-        worlds[k].visible = true
+      if k == activeWorld.name:
+        w.visible = true
       else:
-        worlds[k].visible = false
-      self._toggle_tilemap_collision(worlds[k])
+        w.visible = false
+      self._toggle_tilemap_collision(w)
 
 
 # Take a tile map and set the collision layer to an unused layer if it is not visible

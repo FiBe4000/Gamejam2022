@@ -77,3 +77,4 @@ position = Vector2( 456, 344 )
 [connection signal="timeout" from="WorldSwitchTimer" to="WorldChangeSystem" method="_on_WorldSwitchTimer_timeout"]
 [connection signal="new_world_alignment" from="WorldChangeSystem" to="HUD/CompassPlaceholder/CompassPlaceholder" method="_on_WorldChangeSystem_new_world_alignment"]
 [connection signal="next_world_change" from="WorldChangeSystem" to="Map" method="_on_WorldChangeSystem_next_world_change"]
+[connection signal="world_discovery" from="WorldChangeSystem" to="HUD/CompassPlaceholder/CompassPlaceholder" method="_on_WorldChangeSystem_world_discovery"]

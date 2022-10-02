@@ -1,58 +1,91 @@
 extends Node
 
 
+signal world_discovery
 signal next_world_change
 signal new_world_alignment
 
-const WORLD = {
-  NORMAL=Vector2(0,1),
-  DARK=Vector2(0,-1),
-  ICE=Vector2(-1,0),
-  FIRE=Vector2(1,0),
+const World = {
+  NORMAL={name="NORMAL", col=Color(0, 1, 0, 1), texture=null, order=0},
+  DARK  ={name="DARK",   col=Color(0, 0, 0, 1), texture=null, order=2},
+  FIRE  ={name="FIRE",   col=Color(1, 0, 0, 1), texture=null, order=1},
+  ICE   ={name="ICE",    col=Color(0, 1, 1, 1), texture=null, order=3},
  }
+const NORTH = Vector2(1,0) # .angle() == 0
 
 export var step_size = (PI/4)/4
 
-var next_world = WORLD.NORMAL
-var world_alignment = next_world
+var known_worlds = []
+var cur_world = World.NORMAL
+var next_world = World.NORMAL
+var world_alignment = NORTH
+var world_distance = 0
 
 
 func _ready():
-  pass # Replace with function body.
+  add_world(World.NORMAL)
+  add_world(World.DARK)
+  add_world(World.ICE)
+  emit_signal("next_world_change", next_world)
+  emit_signal("new_world_alignment", world_alignment)
 
 
-func approach(world):
-  var error = world_alignment.angle_to(world)
-  var sig = sign(error)
-  var rot = min(abs(error), step_size)
-  rot = sig * rot
-  world_alignment = world_alignment.rotated(rot)
+func approach(world, ang_str = step_size):
+  var ang_cur = fmod(world_alignment.angle() + 2*PI, 2*PI)
+  var idx = known_worlds.find(world)
+  var ang_tar = world_distance * idx
+  var error = ang_tar - ang_cur
+  var rot = clamp(error, -ang_str, ang_str)
+  world_alignment = NORTH.rotated(ang_cur + rot)
   var new_world = get_aligned_world()
   if new_world != next_world:
     next_world = new_world
-    emit_signal("next_world_change", next_world)
   emit_signal("new_world_alignment", world_alignment)
 
 func get_aligned_world():
   var ang = world_alignment.angle()
   # Take the dot product of the world alignement and the world vectors
   # to find the closest world
-  var best_world = WORLD.NORMAL
+  var best_world = World.NORMAL
   var best_dot = 0
-  for w in WORLD.values():
-    var dot = w.dot(world_alignment)
+  for i in len(known_worlds):
+    var w = known_worlds[i]
+    var w_ang = world_distance * i
+    var w_dir = NORTH.rotated(w_ang)
+    var dot = w_dir.dot(world_alignment)
     if dot > best_dot:
       best_dot = dot
       best_world = w
   return best_world
 
+func add_world(world):
+  var new_known = []
+  var added = false
+  for w in known_worlds:
+    assert(w.order != world.order, "ERROR - two worlds with same 'order'")
+    if world.order < w.order and not added:
+      new_known += [world]
+      added = true
+    new_known += [w]
+  if len(new_known) == len(known_worlds):
+    new_known += [world]
+  known_worlds = new_known
+  world_distance = 2.0*PI / len(known_worlds)
+  emit_signal("world_discovery", known_worlds)
+
 func _input(event):
-   # This event resets the world switch timer, and we manually trigger the world
-   # switch here.
-   if event.is_action_pressed("force_world_timeout"):
-      # Rotate world alignment 90 degrees clockwise
-      world_alignment = world_alignment.rotated(-PI/2)
-      approach(world_alignment)
+  # This event resets the world switch timer, and we manually trigger the world
+  # switch here.
+  if event.is_action_pressed("force_world_timeout"):
+    # Rotate world alignment to clockwise next world
+    var next_world_idx = (known_worlds.find(next_world) + 1) % len(known_worlds)
+    approach(known_worlds[next_world_idx], 2*PI)
+    _on_WorldSwitchTimer_timeout()
+
+func _on_MobFactory_deathevent(world, ang_str):
+  approach(world, ang_str)
 
 func _on_WorldSwitchTimer_timeout():
-  approach(WORLD.DARK)
+  if cur_world != next_world:
+    cur_world = next_world
+    emit_signal("next_world_change", next_world)
