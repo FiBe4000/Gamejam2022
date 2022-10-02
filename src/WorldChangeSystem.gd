@@ -46,11 +46,6 @@ func get_aligned_world():
       best_world = w
   return best_world
 
-func within(ang, world, margin):
-  var tolerance = 0.00001
-  var world_ang = world.angle()
-  return ang == clamp(ang, world_ang-margin-tolerance, world_ang+margin+tolerance)
-
 func _input(event):
    # This event resets the world switch timer, and we manually trigger the world
    # switch here.
