@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/homePlane.png-382fb4705ec320800de260eed9610a53.stex"
+path="res://.import/akitesRassProfessorWalk2.png-ab349fcac05d5f3562fb46298bcae62c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://graphics/tilemaps/homePlane.png"
-dest_files=[ "res://.import/homePlane.png-382fb4705ec320800de260eed9610a53.stex" ]
+source_file="res://graphics/enemies/bosses/akitesRassProfessorWalk2.png"
+dest_files=[ "res://.import/akitesRassProfessorWalk2.png-ab349fcac05d5f3562fb46298bcae62c.stex" ]
 
 [params]
 
