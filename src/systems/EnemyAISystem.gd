@@ -133,7 +133,7 @@ func do_shootment(_delta):
     
     
     aim_dir.rotated(spread)
-    mob.shoot(aim_dir)
+    #mob.shoot(aim_dir)
 
 
 func _on_MobFactory_mob_spawn(mob):
