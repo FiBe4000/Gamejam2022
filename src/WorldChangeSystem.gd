@@ -50,8 +50,8 @@ func _input(event):
    # This event resets the world switch timer, and we manually trigger the world
    # switch here.
    if event.is_action_pressed("force_world_timeout"):
-      # Rotate world alignment 90 degrees
-      world_alignment = world_alignment.rotated(PI/2)
+      # Rotate world alignment 90 degrees clockwise
+      world_alignment = world_alignment.rotated(-PI/2)
       approach(world_alignment)
 
 func _on_WorldSwitchTimer_timeout():
