@@ -73,7 +73,6 @@ func do_movement(_delta):
       var strafe_dir = mob.get_strafe_dir()
       dir = dir + dir.normalized().rotated(PI/2 * strafe_dir) * speed
     
-    print(vel)
     mob.move(dir.normalized(), speed)
 
 

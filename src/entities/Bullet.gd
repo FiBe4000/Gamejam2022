@@ -1,15 +1,12 @@
 extends KinematicBody2D
 
-signal hit
-
-export var speed = 0
-export var direction = Vector2(1,0)
-export var started = false
+var speed = 0
+var direction = Vector2(1,0)
+var started = false
 
 var damage = 0
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
   $AnimatedSprite.playing = true
   show()
@@ -20,12 +17,13 @@ func _physics_process(delta):
     var offset = speed * direction
     var collision = self.move_and_collide(delta*offset)
     if collision:
-      impact()
+      handleCollision(collision)
 
 func start(position, direction, speed):
-    createAndShoot(position, direction, speed, 0, Vector2(0.3,0.3))
+    createAndShoot(position, direction, speed, 0, Vector2(0.3,0.3), 254)
 
-func createAndShoot(position, direction, speed, damage, scale):
+func createAndShoot(position, direction, speed, damage, scale, collisionMask):
+  hide()
   self.position = position
   self.direction = direction
   if direction.x == 0 and direction.y == 0:
@@ -34,10 +32,21 @@ func createAndShoot(position, direction, speed, damage, scale):
   self.speed = speed
   self.damage = damage
   self.scale = scale
+  self.collision_layer = 0
+  self.collision_mask = collisionMask
   $Particles2D.process_material.direction = -Vector3(self.direction.x, self.direction.y, 0.0)
-  
   started = true
   
+func handleCollision(collision):
+  var collider = collision.get_collider()
+  if collider.has_method("hit"):
+    collider.hit(damage)
+    queue_free()
+  elif $TimeToLive.get_time_left() > 1.0:
+    $TimeToLive.stop()
+    $TimeToLive.set_wait_time(1.0)
+    $TimeToLive.start()
 
-func impact():
+
+func _on_TimeToLive_timeout():
   queue_free()

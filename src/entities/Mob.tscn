@@ -1,10 +1,8 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://src/entities/Mob.gd" type="Script" id=1]
 [ext_resource path="res://graphics/enemies/dark/darkMookWalk2.png" type="Texture" id=2]
 [ext_resource path="res://graphics/enemies/normal/normalMookWalk1.png" type="Texture" id=3]
-[ext_resource path="res://graphics/enemySwimming_2.png" type="Texture" id=4]
-[ext_resource path="res://graphics/enemySwimming_1.png" type="Texture" id=5]
 [ext_resource path="res://graphics/enemies/fire/fireMookWalk1.png" type="Texture" id=6]
 [ext_resource path="res://graphics/enemies/fire/fireMookWalk2.png" type="Texture" id=7]
 [ext_resource path="res://graphics/enemies/normal/normalMookWalk2.png" type="Texture" id=8]
@@ -23,7 +21,7 @@ animations = [ {
 "name": "walk_fire",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 5 ), ExtResource( 4 ) ],
+"frames": [ null, null ],
 "loop": true,
 "name": "walk_ice",
 "speed": 5.0
@@ -35,20 +33,20 @@ animations = [ {
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
-radius = 13.0
-height = 24.0
+radius = 51.0
+height = 30.0
 
 [sub_resource type="CapsuleShape2D" id=4]
-radius = 13.0
-height = 24.0
+radius = 49.0
+height = 36.0
 
 [sub_resource type="CapsuleShape2D" id=3]
-radius = 14.0
-height = 24.0
+radius = 46.0
+height = 26.0
 
 [sub_resource type="CapsuleShape2D" id=5]
-radius = 14.0
-height = 24.0
+radius = 49.0
+height = 44.0
 
 [node name="Mob" type="KinematicBody2D" groups=["mobs"]]
 script = ExtResource( 1 )
