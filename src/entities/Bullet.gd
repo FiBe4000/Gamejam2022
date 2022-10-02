@@ -34,6 +34,7 @@ func createAndShoot(position, direction, speed, damage, scale):
   self.speed = speed
   self.damage = damage
   self.scale = scale
+  $Particles2D.process_material.direction = -Vector3(self.direction.x, self.direction.y, 0.0)
   
   started = true
   
