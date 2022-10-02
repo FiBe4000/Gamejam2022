@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://src/progressbar.gd" type="Script" id=1]
 [ext_resource path="res://src/entities/Player.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://src/WorldChangeSystem.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/HUD/CompassPlaceholder.gd" type="Script" id=7]
 [ext_resource path="res://src/WorldSwitchTimer.gd" type="Script" id=8]
+[ext_resource path="res://src/entities/MobFactory.tscn" type="PackedScene" id=9]
 
 [sub_resource type="Shader" id=5]
 code = "shader_type canvas_item;
@@ -72,6 +73,8 @@ script = ExtResource( 7 )
 position = Vector2( 456, 344 )
 
 [node name="WorldChangeSystem" parent="." instance=ExtResource( 6 )]
+
+[node name="MobFactory" parent="." instance=ExtResource( 9 )]
 
 [connection signal="timeout" from="WorldSwitchTimer" to="HUD/TimerVisualizer" method="_on_WorldSwitchTimer_timeout"]
 [connection signal="timeout" from="WorldSwitchTimer" to="WorldChangeSystem" method="_on_WorldSwitchTimer_timeout"]
