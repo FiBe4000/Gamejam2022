@@ -16,7 +16,8 @@ enum Type {
   DARK,
   FIRE,
   FEY, # synonyms increases the chance for their typing
-  ICE,
+  MORN,
+  AKITES_RASS_PROFESSOR,
  }
 
 # Called when the node enters the scene tree for the first time.

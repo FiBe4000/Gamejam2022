@@ -78,6 +78,10 @@ func map_type_to_sprite(type):
       return "fire"
     "ice", "fey":
       return "fey"
+    "morn":
+      return "morn"
+    "akites_rass_professor":
+      return "akites_rass_professor"
 
 
 func select_animation(vel):
@@ -174,15 +178,23 @@ func set_type(type):
     "fire":
       disable_collision()
       $FireTypeCollisionShape2D.disabled = false
-    "ice":
+    "fey":
       disable_collision()
       $FeyTypeCollisionShape2D.disabled = false
+    "morn":
+      disable_collision()
+      $MornCollisionShape2D.disabled = false
+    "akites_rass_professor":
+      disable_collision()
+      $AkitesRassProfessorCollisionShape2D.disabled = false
 
 func disable_collision():
   $NormalTypeCollisionShape2D.disabled = true
   $DarkTypeCollisionShape2D.disabled = true
   $FireTypeCollisionShape2D.disabled = true
   $FeyTypeCollisionShape2D.disabled = true
+  $MornCollisionShape2D.disabled = true
+  $AkitesRassProfessorCollisionShape2D.disabled = true
 
 
 func _on_AnimatedSprite_animation_finished():
