@@ -188,9 +188,11 @@ func set_type(type):
       $FeyTypeCollisionShape2D.disabled = false
     "morn":
       disable_collision()
+      self.scale = Vector2(3.3, 3.3)
       $MornCollisionShape2D.disabled = false
     "akites_rass_professor":
       disable_collision()
+      self.scale = Vector2(3.3, 3.3)
       $AkitesRassProfessorCollisionShape2D.disabled = false
 
 func disable_collision():
