@@ -1,5 +1,7 @@
 extends Node
 
+const change_period = PI / 20 # half turn / seconds
+
 var score
 
 func _ready():
@@ -9,11 +11,16 @@ func _ready():
 func _process(delta):
   if Input.is_action_pressed("exit_game"):
     exit_game()
-  update_health_bar()  
-  
+  update_health_bar()
+  update_world_alignment(delta)
+
 func update_health_bar():
   $HUD_Scene.update_player_health(($Player.get_health()))
-  
+
+func update_world_alignment(delta):
+  var rot = change_period
+  $WorldChangeSystem.rotate(rot * delta, -1)
+
 func game_over():
   pass
 
@@ -40,4 +47,4 @@ func _on_PlayerScene_hit():
 
 func _on_HUD_start_game():
   new_game()
-  
+

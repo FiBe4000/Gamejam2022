@@ -30,18 +30,24 @@ func _ready():
   emit_signal("next_world_change", next_world)
   emit_signal("new_world_alignment", world_alignment)
 
-
-func approach(world, ang_str = step_size):
+func rotate(rotation, rot_str = step_size):
+  if rot_str < 0:
+    rot_str = abs(rotation)
+  var rot = clamp(rotation, -rot_str, rot_str)
   var ang_cur = fmod(world_alignment.angle() + 2*PI, 2*PI)
-  var idx = known_worlds.find(world)
-  var ang_tar = world_distance * idx
-  var error = ang_tar - ang_cur
-  var rot = clamp(error, -ang_str, ang_str)
   world_alignment = NORTH.rotated(ang_cur + rot)
   var new_world = get_aligned_world()
   if new_world != next_world:
     next_world = new_world
   emit_signal("new_world_alignment", world_alignment)
+  
+
+func approach(world, rot_str = step_size):
+  var ang_cur = fmod(world_alignment.angle() + 2*PI, 2*PI)
+  var idx = known_worlds.find(world)
+  var ang_tar = world_distance * idx
+  var error = ang_tar - ang_cur
+  rotate(error, rot_str)
 
 func get_aligned_world():
   var ang = world_alignment.angle()
