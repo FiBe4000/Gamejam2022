@@ -8,6 +8,7 @@ signal health_changed(health_percent)
 export var max_health = 100.0
 export var patrol = PoolVector2Array()
 export var value = 0.2 # 1 == 100% of PI (rotate to opposite side)
+export var boss_scale = 2.0
 
 var hit_points = max_health
 var next_patrol = 0
@@ -188,11 +189,11 @@ func set_type(type):
       $FeyTypeCollisionShape2D.disabled = false
     "morn":
       disable_collision()
-      self.scale = Vector2(3.3, 3.3)
+      self.scale = Vector2(boss_scale, boss_scale)
       $MornCollisionShape2D.disabled = false
     "akites_rass_professor":
       disable_collision()
-      self.scale = Vector2(3.3, 3.3)
+      self.scale = Vector2(boss_scale, boss_scale)
       $AkitesRassProfessorCollisionShape2D.disabled = false
 
 func disable_collision():
