@@ -6,6 +6,7 @@ signal shoot(sourceType, position, direction, speed, damage, size)
 
 export var hit_points = 100
 export var patrol = PoolVector2Array()
+export var value = 0.2 # 1 == 100% of PI (rotate to opposite side)
 
 var next_patrol = 0
 var look_dir = Vector2(0,0)
@@ -91,10 +92,14 @@ func hit(damage):
     death()
 
 func death():
-  pass
+  get_parent().despawn(self)
+  queue_free()
 
 func get_mob_type():
   return type
+  
+func get_value():
+  return value
 
 func get_mob_move_behaviour():
   return behavior_move

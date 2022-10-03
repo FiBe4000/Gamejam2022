@@ -92,9 +92,9 @@ func _on_MobFactory_mob_died(mob):
       world = World.DARK
     "fire":
       world = World.FIRE
-    "ice":
+    "ice", "fey": # "fey" near homonym to "fire"? But although it was never used to set animation, the ice animations contains the word, so prolly that.
       world = World.ICE
-  approach(world, mob.hit_points/100)
+  approach(world, mob.get_value()*PI)
 
 func _on_WorldSwitchTimer_timeout():
   if cur_world != next_world:
