@@ -1,17 +1,27 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/entities/Player.gd" type="Script" id=1]
 [ext_resource path="res://graphics/player/esgobertWalk1.png" type="Texture" id=2]
 [ext_resource path="res://graphics/player/esgobertWalk2.png" type="Texture" id=3]
 [ext_resource path="res://src/entities/BulletFactory.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/HUD/HealthBar.tscn" type="PackedScene" id=5]
+[ext_resource path="res://graphics/player/esgobertIdle.png" type="Texture" id=6]
 
 [sub_resource type="CapsuleShape2D" id=3]
 radius = 60.0
 height = 10.0
 
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 16, 16 )
+
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
+"frames": [ SubResource( 4 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 2 ), ExtResource( 3 ) ],
 "loop": true,
 "name": "walk",
@@ -26,6 +36,7 @@ script = ExtResource( 1 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
+zoom = Vector2( 0.66, 0.66 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 0.5 )
@@ -35,8 +46,7 @@ shape = SubResource( 3 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 3, 3 )
 frames = SubResource( 2 )
-animation = "walk"
-frame = 1
+animation = "Idle"
 playing = true
 
 [node name="BulletFactory" parent="." instance=ExtResource( 4 )]

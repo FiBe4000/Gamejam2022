@@ -107,4 +107,4 @@ func shoot():
   aim_dir = aim_dir.rotated(rand_range(-bullet_spread, bullet_spread))
   
   var dmg = bullet_dmg + rand_range(-bullet_dmg_range, bullet_dmg_range)
-  emit_signal("shoot", "Player", self.position, aim_dir, bullet_speed, dmg, Vector2(0.25, 0.25))
+  emit_signal("shoot", "Player", self.position, aim_dir, bullet_speed, dmg, Vector2(0.2, 0.2))
