@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/enemySwimming_2.png-f790308bbe9320c4f70e8bff21c3ad32.stex"
+path="res://.import/MornWalk1.png-102ef6cb940d9dcfb42a8e5981829c3b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://graphics/enemySwimming_2.png"
-dest_files=[ "res://.import/enemySwimming_2.png-f790308bbe9320c4f70e8bff21c3ad32.stex" ]
+source_file="res://graphics/enemies/bosses/Morn/MornWalk1.png"
+dest_files=[ "res://.import/MornWalk1.png-102ef6cb940d9dcfb42a8e5981829c3b.stex" ]
 
 [params]
 
