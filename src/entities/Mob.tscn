@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://src/entities/Mob.gd" type="Script" id=1]
 [ext_resource path="res://graphics/enemies/dark/darkMookWalk2.png" type="Texture" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://graphics/enemies/fire/fireMookIdle.png" type="Texture" id=15]
 [ext_resource path="res://graphics/enemies/fey/feyMookWalk2.png" type="Texture" id=16]
 [ext_resource path="res://graphics/enemies/fey/feyMookWalk1.png" type="Texture" id=17]
+[ext_resource path="res://src/HUD/HealthBar.tscn" type="PackedScene" id=18]
 
 [sub_resource type="SpriteFrames" id=1]
 resource_local_to_scene = true
@@ -125,3 +126,9 @@ disabled = true
 [node name="FeyTypeCollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 5 )
 disabled = true
+
+[node name="HealthBar" parent="." instance=ExtResource( 18 )]
+position = Vector2( 0, -35 )
+scale = Vector2( 0.4, 0.2 )
+
+[connection signal="health_changed" from="." to="HealthBar" method="_on_Parent_health_changed"]

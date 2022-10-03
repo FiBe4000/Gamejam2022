@@ -3,11 +3,13 @@ extends KinematicBody2D
 const Behaviours = preload("res://src/systems/EnemyAISystem.gd")
 
 signal shoot(sourceType, position, direction, speed, damage, size)
+signal health_changed(health_percent)
 
-export var hit_points = 100
+export var max_health = 100
 export var patrol = PoolVector2Array()
 export var value = 0.2 # 1 == 100% of PI (rotate to opposite side)
 
+var hit_points = max_health
 var next_patrol = 0
 var look_dir = Vector2(0,0)
 var dir = Vector2(0,0)
@@ -87,13 +89,16 @@ func move(dir, speed):
 
 func hit(damage):
   hit_points -= damage
-  
+  emit_signal("health_changed", get_health_percent())
   if hit_points <= 0:
     death()
 
 func death():
   get_parent().despawn(self)
   queue_free()
+
+func get_health_percent() -> float:
+  return (hit_points as float)/max_health
 
 func get_mob_type():
   return type

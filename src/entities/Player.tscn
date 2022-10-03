@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/entities/Player.gd" type="Script" id=1]
 [ext_resource path="res://graphics/player/esgobertWalk1.png" type="Texture" id=2]
 [ext_resource path="res://graphics/player/esgobertWalk2.png" type="Texture" id=3]
 [ext_resource path="res://src/entities/BulletFactory.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/HUD/HealthBar.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CapsuleShape2D" id=3]
 radius = 60.0
@@ -35,8 +36,14 @@ shape = SubResource( 3 )
 scale = Vector2( 3, 3 )
 frames = SubResource( 2 )
 animation = "walk"
+frame = 1
 playing = true
 
 [node name="BulletFactory" parent="." instance=ExtResource( 4 )]
 
+[node name="HealthBar" parent="." instance=ExtResource( 5 )]
+position = Vector2( 0, -25 )
+scale = Vector2( 0.6, 0.2 )
+
+[connection signal="health_changed" from="." to="HealthBar" method="_on_Parent_health_changed"]
 [connection signal="shoot" from="." to="BulletFactory" method="_on_shoot"]
