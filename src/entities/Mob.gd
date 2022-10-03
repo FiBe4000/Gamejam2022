@@ -9,21 +9,22 @@ export var max_health = 100.0
 export var patrol = PoolVector2Array()
 export var value = 0.2 # 1 == 100% of PI (rotate to opposite side)
 
+var difficulty_scale = 1
 var hit_points = max_health
-var next_patrol = 0
-var look_dir = Vector2(0,0)
-var dir = Vector2(0,0)
 var move_speed = 40.0
-var strafe_dir = 1
-var speed = 40
 var bullet_speed = 200.0
 var bullet_spread = PI/16
 var bullet_damage = 10.0
+var rof = 0.5
+var next_patrol = 0
+var look_dir = Vector2(0,0)
+var dir = Vector2(0,0)
+var strafe_dir = 1
+var speed = 40
 var type = "normal"
 var behavior_move = [Behaviours.Behaviour_Move.STATIC]
 var behavior_shoot = [Behaviours.Behaviour_Shoot.FRIENDLY]
 var desired_distance = 100
-var rof = 0.5
 var last_shot = 0
 var shoot_cooldown = 0
 var shooting = false
@@ -42,16 +43,10 @@ func init(pos, type, behavior_move, behavior_shoot, difficulty_scale):
   self.behavior_shoot = behavior_shoot
   set_type(self.type)
   scale(difficulty_scale)
+  set_health(get_max_health())
 
 func scale(difficulty_scale):
-  max_health *= difficulty_scale
-  hit_points *= difficulty_scale
-  move_speed *= 1 + difficulty_scale / 2 - 1.0 / 2 # scale slower
-  bullet_speed *= 1 + difficulty_scale / 2 - 1.0 / 2
-  bullet_damage *= difficulty_scale
-  rof *= 1 + difficulty_scale / 3 - 1.0 / 3
-  bullet_spread *= 1 + difficulty_scale / 10 - 1.0 / 10# higher rof supports higher spread -> harder to dodge
-  bullet_damage *= difficulty_scale
+  self.difficulty_scale = difficulty_scale
 
 func _physics_process(delta):
   if dir.x != 0 or dir.y != 0:
@@ -116,8 +111,29 @@ func set_health(health: float):
   self.hit_points = health
   emit_signal("health_changed", get_health_percent())
 
+func get_health() -> float:
+  return hit_points
+
+func get_max_health():
+  return max_health * difficulty_scale
+
 func get_health_percent() -> float:
-  return float(hit_points)/max_health
+  return get_health()/get_max_health()
+
+func get_move_speed():
+  return move_speed * (1 + difficulty_scale / 2 - 1.0 / 2) # scale slower
+
+func get_bullet_speed():
+  return bullet_speed * (1 + difficulty_scale / 2 - 1.0 / 2)
+
+func get_bullet_damage():
+  return bullet_damage * difficulty_scale
+
+func get_shoot_spread():
+  return bullet_spread * (1 + difficulty_scale / 10 - 1.0 / 10)
+
+func get_shoot_cooldown():
+  return 1.0 / (rof * (1 + difficulty_scale / 3 - 1.0 / 3))
 
 func get_mob_type():
   return type
@@ -133,15 +149,6 @@ func get_mob_shoot_behaviour():
 
 func get_desired_distance():
   return desired_distance
-
-func get_move_speed():
-  return move_speed
-  
-func get_shoot_speed():
-  return bullet_speed
-  
-func get_shoot_spread():
-  return bullet_spread
 
 func get_strafe_dir():
   return strafe_dir
@@ -159,8 +166,7 @@ func shoot(aim_dir):
     aim_dir = look_dir
   aim_dir = aim_dir.normalized()
   
-  shoot_cooldown = 1.0/rof
-  if last_shot >= shoot_cooldown:
+  if last_shot >= get_shoot_cooldown():
     last_shot = 0
     shooting == true
     $AnimatedSprite.play("attack_"+map_type_to_sprite(type))
@@ -169,7 +175,7 @@ func shoot(aim_dir):
     if get_mob_type() == "morn":
       shooter_type = "morn"
       bullet_scale = Vector2(3.3, 3.3)
-    emit_signal("shoot", shooter_type, position, aim_dir, bullet_speed, bullet_damage, bullet_scale)
+    emit_signal("shoot", shooter_type, position, aim_dir, get_bullet_speed(), get_bullet_damage(), bullet_scale)
 
 func set_type(type):
   self.type = type

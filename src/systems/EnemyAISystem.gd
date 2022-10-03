@@ -110,11 +110,11 @@ func do_shootment(_delta):
   for mob in mobs:
     assert(mob.has_method("shoot"), "ERROR: Mob interface not fulfilled!")
     assert(mob.has_method("get_mob_shoot_behaviour"), "ERROR: Mob interface not fulfilled!")
-    assert(mob.has_method("get_shoot_speed"), "ERROR: Mob interface not fulfilled!")
+    assert(mob.has_method("get_bullet_speed"), "ERROR: Mob interface not fulfilled!")
     assert(mob.has_method("get_shoot_spread"), "ERROR: Mob interface not fulfilled!")
     
     var behaviour = mob.get_mob_shoot_behaviour()
-    var speed = mob.get_shoot_speed()
+    var speed = mob.get_bullet_speed()
     var spread = mob.get_shoot_spread() / 2
     spread = rand_range(-spread, spread)
     
