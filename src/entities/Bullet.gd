@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+
+var sourceType
 var speed = 0
 var direction = Vector2(1,0)
 var started = false
@@ -20,9 +22,16 @@ func _physics_process(delta):
       handleCollision(collision)
 
 func start(position, direction, speed):
-    createAndShoot(position, direction, speed, 0, Vector2(0.3,0.3), 254)
+    createAndShoot(sourceType, position, direction, speed, 0, Vector2(0.3,0.3), 254)
 
-func createAndShoot(position, direction, speed, damage, scale, collisionMask):
+func createAndShoot(sourceType, position, direction, speed, damage, scale, collisionMask):
+  self.sourceType = sourceType
+  match (sourceType):
+    "morn":
+      $AnimatedSprite.animation = "morn_glory"
+      $FlamingTail.visible = false
+    _:
+      $AnimatedSprite.animation = "burn"
   hide()
   self.position = position
   self.direction = direction

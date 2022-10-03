@@ -164,7 +164,12 @@ func shoot(aim_dir):
     last_shot = 0
     shooting == true
     $AnimatedSprite.play("attack_"+map_type_to_sprite(type))
-    emit_signal("shoot", "Mob", position, aim_dir, bullet_speed, bullet_damage, Vector2(0.3, 0.3))
+    var shooter_type = "Mob"
+    var bullet_scale = Vector2(0.2, 0.2)
+    if get_mob_type() == "morn":
+      shooter_type = "morn"
+      bullet_scale = Vector2(3.3, 3.3)
+    emit_signal("shoot", shooter_type, position, aim_dir, bullet_speed, bullet_damage, bullet_scale)
 
 func set_type(type):
   self.type = type

@@ -11,7 +11,7 @@ func _on_shoot(sourceType, pos, dir, speed, damage, scale):
   match(sourceType):
     "Player": 
       sourceCollisionLayer = 2
-    "Mob":
+    "Mob", "morn":
       sourceCollisionLayer = 3
     _:
       sourceCollisionLayer = 0
@@ -20,7 +20,7 @@ func _on_shoot(sourceType, pos, dir, speed, damage, scale):
   # Layer 5 is water which we do not want to hit with bullets
   collisionMask = collisionMask & ~(1 << 4)
   var newBullet = Bullet.instance()
-  newBullet.createAndShoot(pos, dir, speed, damage, scale, collisionMask)
+  newBullet.createAndShoot(sourceType, pos, dir, speed, damage, scale, collisionMask)
   self.add_child(newBullet)
   newBullet.z_index = 4
 

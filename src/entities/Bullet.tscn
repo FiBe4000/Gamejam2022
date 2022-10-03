@@ -1,18 +1,43 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://src/entities/Bullet.gd" type="Script" id=1]
 [ext_resource path="res://graphics/skott1.png" type="Texture" id=2]
 [ext_resource path="res://graphics/skott3.png" type="Texture" id=3]
 [ext_resource path="res://graphics/skott2.png" type="Texture" id=4]
 [ext_resource path="res://graphics/particle.png" type="Texture" id=5]
+[ext_resource path="res://graphics/projectiles/Morn/projectileMorn3.png" type="Texture" id=6]
+[ext_resource path="res://graphics/projectiles/Morn/projectileMorn4.png" type="Texture" id=7]
+[ext_resource path="res://graphics/projectiles/Morn/projectileMorn1.png" type="Texture" id=8]
+[ext_resource path="res://graphics/projectiles/Morn/projectileMorn2.png" type="Texture" id=9]
 
 [sub_resource type="CircleShape2D" id=1]
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 8 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 9 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 7 )
+region = Rect2( 0, 0, 16, 16 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 2 ), ExtResource( 4 ), ExtResource( 3 ) ],
 "loop": true,
 "name": "burn",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ) ],
+"loop": true,
+"name": "morn_glory",
 "speed": 5.0
 } ]
 
@@ -54,7 +79,6 @@ shape = SubResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 2 )
 animation = "burn"
-frame = 1
 
 [node name="FlamingTail" type="Particles2D" parent="."]
 material = SubResource( 3 )
