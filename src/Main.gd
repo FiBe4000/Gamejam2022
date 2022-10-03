@@ -46,6 +46,9 @@ func restart():
   get_tree().reload_current_scene()
 
 func set_score(score):
+  if $Player.dead:
+    return
+  
   self.score = score
   $HUD_Scene.start(score)
   $MobFactory.difficulty_scale = 1.0 + float(score) / difficulty_scaling

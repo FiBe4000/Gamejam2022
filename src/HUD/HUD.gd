@@ -26,7 +26,7 @@ func update_player_health(health):
   pass
 
 func _on_Player_death():
-  $ScoreNumber.text = str(ceil(0))
+  #$ScoreNumber.text = str(ceil(0))
   $DeahtNotice.visible = true
 
 

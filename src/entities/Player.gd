@@ -20,12 +20,16 @@ var rof = 2
 var last_shot = 0
 
 var health = max_health
+var dead = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
   pass
 
 func _physics_process(delta):
+  if dead:
+    return
+  
   movement()
   
   # regenerate health
@@ -69,6 +73,7 @@ func hit(damage):
     die()
 
 func die():
+  dead = true
   emit_signal("death")
   regen = 0
 
