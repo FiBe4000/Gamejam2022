@@ -13,7 +13,6 @@ var score = 0.0
 var difficulty_scaling = 300 # time (in score-units) to add 100% difficulty
 
 func _ready():
-  print($HUD_Scene/DeahtNotice/RestartButton)
   $HUD_Scene/DeahtNotice/RestartButton.connect("pressed", self, "_on_HUD_Scene_pressed")
   randomize()
   new_game()
