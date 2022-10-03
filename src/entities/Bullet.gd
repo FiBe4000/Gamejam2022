@@ -28,7 +28,7 @@ func createAndShoot(sourceType, position, direction, speed, damage, scale, colli
   self.sourceType = sourceType
   match (sourceType):
     "morn":
-      $AnimatedSprite.animation = "morn_glory"
+      $AnimatedSprite.animation = "morn_projectile"
       $FlamingTail.visible = false
     _:
       $AnimatedSprite.animation = "burn"
