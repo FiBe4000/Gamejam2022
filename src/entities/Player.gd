@@ -12,6 +12,8 @@ export var regen = 11.1 # per second
 var look_dir = Vector2(1,0)
 var speed = 200
 
+var bullet_dmg = 33
+var bullet_dmg_range = 9
 var bullet_speed = 300
 var bullet_spread = 0.1
 var rof = 2
@@ -64,7 +66,11 @@ func _on_Player_body_entered(body):
 func hit(damage):
   set_health( max(0, (health - damage)) )
   if health <= 0:
-    emit_signal("death")
+    die()
+
+func die():
+  emit_signal("death")
+  regen = 0
 
 func set_health(health : float):
   self.health = health
@@ -99,5 +105,6 @@ func shoot():
   
   # Add some uncertainty to the aim.
   aim_dir = aim_dir.rotated(rand_range(-bullet_spread, bullet_spread))
-
-  emit_signal("shoot", "Player", self.position, aim_dir, bullet_speed, 10, Vector2(0.25, 0.25))
+  
+  var dmg = bullet_dmg + rand_range(-bullet_dmg_range, bullet_dmg_range)
+  emit_signal("shoot", "Player", self.position, aim_dir, bullet_speed, dmg, Vector2(0.25, 0.25))

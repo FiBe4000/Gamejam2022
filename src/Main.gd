@@ -9,7 +9,8 @@ var variability_vel = 0
 var lowest = variability_vel
 var highest = variability_vel
 
-var score
+var score = 0.0
+var difficulty_scaling = 300 # time (in score-units) to add 100% difficulty
 
 func _ready():
   randomize()
@@ -37,16 +38,19 @@ func game_over():
   pass
 
 func new_game():
-  score = 0
+  set_score(0.0)
   $Player.start($StartPosition.position)
-  $HUD_Scene.start($Player.get_health())
+
+func set_score(score):
+  self.score = score
+  $HUD_Scene.start(score)
+  $MobFactory.difficulty_scale = 1.0 + float(score) / difficulty_scaling
 
 func exit_game():
   get_tree().quit()
 
 func _on_ScoreTimer_timeout():
-  score += 1
-  $HUD.update_score(score)
+  set_score(score+1)
 
 func _on_StartTimer_timeout():
   $MobTimer.start()

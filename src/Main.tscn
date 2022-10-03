@@ -54,6 +54,9 @@ wait_time = 10.0
 autostart = true
 script = ExtResource( 8 )
 
+[node name="ScoreTimer" type="Timer" parent="."]
+autostart = true
+
 [node name="HUD" type="CanvasLayer" parent="."]
 
 [node name="TimerVisualizer" type="TextureProgress" parent="HUD"]
@@ -86,6 +89,7 @@ position = Vector2( 764, 509 )
 [connection signal="death" from="Player" to="HUD_Scene" method="_on_Player_death"]
 [connection signal="timeout" from="WorldSwitchTimer" to="HUD/TimerVisualizer" method="_on_WorldSwitchTimer_timeout"]
 [connection signal="timeout" from="WorldSwitchTimer" to="WorldChangeSystem" method="_on_WorldSwitchTimer_timeout"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
 [connection signal="new_world_alignment" from="WorldChangeSystem" to="HUD/CompassPlaceholder/CompassPlaceholder" method="_on_WorldChangeSystem_new_world_alignment"]
 [connection signal="next_world_change" from="WorldChangeSystem" to="Map" method="_on_WorldChangeSystem_next_world_change"]
 [connection signal="world_discovery" from="WorldChangeSystem" to="HUD/CompassPlaceholder/CompassPlaceholder" method="_on_WorldChangeSystem_world_discovery"]

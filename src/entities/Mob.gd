@@ -5,7 +5,7 @@ const Behaviours = preload("res://src/systems/EnemyAISystem.gd")
 signal shoot(sourceType, position, direction, speed, damage, size)
 signal health_changed(health_percent)
 
-export var max_health = 100
+export var max_health = 100.0
 export var patrol = PoolVector2Array()
 export var value = 0.2 # 1 == 100% of PI (rotate to opposite side)
 
@@ -13,17 +13,17 @@ var hit_points = max_health
 var next_patrol = 0
 var look_dir = Vector2(0,0)
 var dir = Vector2(0,0)
-var move_speed = 40
+var move_speed = 40.0
 var strafe_dir = 1
 var speed = 40
-var bullet_speed = 200
+var bullet_speed = 200.0
 var bullet_spread = PI/16
-var bullet_damage = 10
+var bullet_damage = 10.0
 var type = "normal"
 var behavior_move = [Behaviours.Behaviour_Move.STATIC]
 var behavior_shoot = [Behaviours.Behaviour_Shoot.FRIENDLY]
 var desired_distance = 100
-var rof = 2
+var rof = 0.5
 var last_shot = 0
 var shoot_cooldown = 0
 
@@ -34,12 +34,23 @@ func _ready():
   set_type("normal")
   pass # Replace with function body.
   
-func init(pos, type, behavior_move, behavior_shoot):
+func init(pos, type, behavior_move, behavior_shoot, difficulty_scale):
   position = pos
   self.type = type
   self.behavior_move = behavior_move
   self.behavior_shoot = behavior_shoot
   set_type(self.type)
+  scale(difficulty_scale)
+
+func scale(difficulty_scale):
+  max_health*= difficulty_scale
+  hit_points*= difficulty_scale
+  move_speed*= difficulty_scale / 2 # scale slower
+  bullet_speed*= difficulty_scale / 2
+  bullet_damage*= difficulty_scale
+  rof*= difficulty_scale / 3
+  bullet_spread*= difficulty_scale / 10 # higher rof supports higher spread -> harder to dodge
+  bullet_damage*= difficulty_scale
 
 func _physics_process(delta):
   if dir.x != 0 or dir.y != 0:

@@ -3,20 +3,21 @@ extends CanvasLayer
 
 
 func _ready():
-  $HealthNumber.visible = false
+  $ScoreNumber.visible = false
   $DeahtNotice.visible = false
   pass
 
-func start(health):
-  $HealthNumber.text = str(ceil(health))
-  $HealthNumber.visible = true
+func start(score):
+  $ScoreNumber.text = str(ceil(score))
+  $ScoreNumber.visible = true
 
 func _process(delta):
   pass
 
 func update_player_health(health):
-  $HealthNumber.text = str(ceil(health))
+  #$HealthNumber.text = str(ceil(health))
+  pass
 
 func _on_Player_death():
-  $HealthNumber.text = str(ceil(0))
+  $ScoreNumber.text = str(ceil(0))
   $DeahtNotice.visible = true

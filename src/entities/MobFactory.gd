@@ -5,9 +5,10 @@ const Behaviours = preload("res://src/systems/EnemyAISystem.gd")
 signal mob_spawn
 signal mob_died
 
-var MOB_MAX = 10
+var MOB_MAX = 50
 var last_spawn = 0
-var spawn_delay = 3
+var spawn_delay = 1.0
+var difficulty_scale = 1.0
 var Mob = preload("res://src/entities/Mob.tscn")
 
 enum Type {
@@ -25,7 +26,7 @@ func _ready():
 func _physics_process(delta):
   var mobs = get_tree().get_nodes_in_group("mobs")
   last_spawn += delta
-  if mobs.size() < MOB_MAX and last_spawn > spawn_delay:
+  if mobs.size() < MOB_MAX and last_spawn > spawn_delay * (1 + mobs.size()/5):
     var i = rand_range(0,len(Type.keys()))
     var type = Type.keys()[i].to_lower()
     spawn(type, [Behaviours.Behaviour_Move.KEEP_DISTANCE], [Behaviours.Behaviour_Shoot.AIM])
@@ -37,7 +38,7 @@ func spawn(type, behaviour_move, behaviour_shoot):
   var mob = Mob.instance()
   mob.connect("shoot", $BulletFactory, "_on_shoot")
   self.add_child(mob)
-  mob.init(ply_pos + mob_pos, type, behaviour_move, behaviour_shoot)
+  mob.init(ply_pos + mob_pos, type, behaviour_move, behaviour_shoot, difficulty_scale)
   mob.z_index = 4
   var col = mob.move_and_collide(-mob_pos, true, true, true)
   if col.collider != ply:
