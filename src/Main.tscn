@@ -134,6 +134,7 @@ texture = ExtResource( 12 )
 [connection signal="new_world_alignment" from="WorldChangeSystem" to="HUD/CompassPlaceholder/CompassPlaceholder" method="_on_WorldChangeSystem_new_world_alignment"]
 [connection signal="next_world_change" from="WorldChangeSystem" to="Map" method="_on_WorldChangeSystem_next_world_change"]
 [connection signal="next_world_change" from="WorldChangeSystem" to="HUD/LightShader" method="_on_WorldChangeSystem_next_world_change"]
+[connection signal="next_world_change" from="WorldChangeSystem" to="HUD_Scene" method="_on_WorldChangeSystem_next_world_change"]
 [connection signal="world_discovery" from="WorldChangeSystem" to="HUD/CompassPlaceholder/CompassPlaceholder" method="_on_WorldChangeSystem_world_discovery"]
 [connection signal="mob_died" from="MobFactory" to="WorldChangeSystem" method="_on_MobFactory_mob_died"]
 [connection signal="mob_died" from="MobFactory" to="EnemyAISystem" method="_on_MobFactory_mob_died"]
