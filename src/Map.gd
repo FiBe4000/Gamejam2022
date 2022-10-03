@@ -23,8 +23,8 @@ var activeWorld = WS.World.NORMAL
 func _ready():
   _set_visibility()
   for child in $NormalLevel.get_children():
-    (child as TileMap).scale.x = 2
-    (child as TileMap).scale.y = 2
+    (child as TileMap).scale.x = 3
+    (child as TileMap).scale.y = 3
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
