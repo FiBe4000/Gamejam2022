@@ -13,6 +13,7 @@ var score = 0.0
 var difficulty_scaling = 300 # time (in score-units) to add 100% difficulty
 
 func _ready():
+  $HUD_Scene/DeahtNotice/RestartButton.connect("pressed", self, "_on_HUD_Scene_pressed")
   randomize()
   new_game()
 
@@ -41,6 +42,9 @@ func new_game():
   set_score(0.0)
   $Player.start($StartPosition.position)
 
+func restart():
+  get_tree().reload_current_scene()
+
 func set_score(score):
   self.score = score
   $HUD_Scene.start(score)
@@ -63,4 +67,7 @@ func _on_PlayerScene_hit():
 
 func _on_HUD_start_game():
   new_game()
+
+func _on_HUD_Scene_pressed():
+  restart()
 

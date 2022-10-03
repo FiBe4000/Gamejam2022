@@ -40,3 +40,14 @@ margin_bottom = 19.5
 custom_fonts/font = SubResource( 4 )
 text = "YOU DIED"
 align = 1
+
+[node name="RestartButton" type="Button" parent="DeahtNotice"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -32.0
+margin_top = 26.5
+margin_right = 32.0
+margin_bottom = 46.5
+text = "RESTART"
