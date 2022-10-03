@@ -9,13 +9,14 @@ var MOB_MAX = 50
 var last_spawn = 0
 var spawn_delay = 1.0
 var difficulty_scale = 1.0
+var spaw_morn = false
 var Mob = preload("res://src/entities/Mob.tscn")
 
 enum Type {
   NORMAL,
   DARK,
   FIRE,
-  FEY, # synonyms increases the chance for their typing
+  FEY,
   MORN,
   AKITES_RASS_PROFESSOR,
  }
@@ -25,10 +26,13 @@ func _ready():
   pass # Replace with function body.
 
 func _physics_process(delta):
+  if spaw_morn:
+    _on_MornTimer_timeout()
+  
   var mobs = get_tree().get_nodes_in_group("mobs")
   last_spawn += delta
   if mobs.size() < MOB_MAX and last_spawn > spawn_delay * (1 + mobs.size()/5):
-    var i = rand_range(0,len(Type.keys()))
+    var i = rand_range(0,4)
     var type = Type.keys()[i].to_lower()
     spawn(type, [Behaviours.Behaviour_Move.KEEP_DISTANCE], [Behaviours.Behaviour_Shoot.AIM])
 
@@ -46,10 +50,12 @@ func spawn(type, behaviour_move, behaviour_shoot):
   if col.collider != ply:
     # Unable to move to player, retry new position (next frame)
     mob.queue_free()
+    return false
     #spawn(type, behaviour_move, behaviour_shoot, delta)
   else:
     last_spawn = 0
     emit_signal("mob_spawn", mob)
+    return true
   #var pool = (mob.patrol as PoolVector2Array) # Testing patrol stuff, meant to be used only in scene-editor
   #pool.push_back(mob.position)
   #pool.push_back(mob.position + Vector2(150, 0))
@@ -65,3 +71,13 @@ func despawn(mob):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #  pass
+
+
+func _on_MornTimer_timeout():
+  var i = rand_range(4,6)
+  var type = Type.keys()[i].to_lower()
+  var spawn = spawn(type, [Behaviours.Behaviour_Move.KEEP_DISTANCE], [Behaviours.Behaviour_Shoot.AIM])
+  if not spawn:
+    spaw_morn = true
+  else:
+    spaw_morn = false
