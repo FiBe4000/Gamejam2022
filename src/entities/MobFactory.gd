@@ -30,7 +30,7 @@ func _physics_process(delta):
     var type = Type.keys()[i].to_lower()
     spawn(type, [Behaviours.Behaviour_Move.KEEP_DISTANCE], [Behaviours.Behaviour_Shoot.AIM])
 
-func spawn(type, behaviour_move, behaviour_shoot, ):
+func spawn(type, behaviour_move, behaviour_shoot):
   var ply = $"../Player"
   var ply_pos = ply.position
   var mob_pos = new_mob_position()
