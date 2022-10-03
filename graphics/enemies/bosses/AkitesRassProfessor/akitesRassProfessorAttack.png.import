@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/enemySwimming_2.png-f790308bbe9320c4f70e8bff21c3ad32.stex"
+path="res://.import/akitesRassProfessorAttack.png-f1413c539860e41a4c41d4f12d8d2d3b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://graphics/enemySwimming_2.png"
-dest_files=[ "res://.import/enemySwimming_2.png-f790308bbe9320c4f70e8bff21c3ad32.stex" ]
+source_file="res://graphics/enemies/bosses/AkitesRassProfessor/akitesRassProfessorAttack.png"
+dest_files=[ "res://.import/akitesRassProfessorAttack.png-f1413c539860e41a4c41d4f12d8d2d3b.stex" ]
 
 [params]
 
