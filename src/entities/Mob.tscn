@@ -30,7 +30,7 @@
 [sub_resource type="SpriteFrames" id=1]
 resource_local_to_scene = true
 animations = [ {
-"frames": [ ExtResource( 26 ) ],
+"frames": [ ExtResource( 26 ), ExtResource( 26 ), ExtResource( 26 ), ExtResource( 26 ), ExtResource( 26 ) ],
 "loop": true,
 "name": "attack_akites_rass_professor",
 "speed": 5.0
@@ -50,7 +50,7 @@ animations = [ {
 "name": "attack_fire",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 23 ) ],
+"frames": [ ExtResource( 23 ), ExtResource( 23 ), ExtResource( 23 ), ExtResource( 23 ), ExtResource( 23 ) ],
 "loop": true,
 "name": "attack_morn",
 "speed": 5.0
@@ -153,8 +153,7 @@ script = ExtResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 3, 3 )
 frames = SubResource( 1 )
-animation = "walk_akites_rass_professor"
-frame = 1
+animation = "idle_morn"
 playing = true
 
 [node name="NormalTypeCollisionShape2D" type="CollisionShape2D" parent="."]
