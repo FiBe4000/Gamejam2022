@@ -94,7 +94,7 @@ wait_time = 5.0
 one_shot = true
 autostart = true
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="BulletLight" type="Sprite" parent="."]
 scale = Vector2( 12, 12 )
 texture = ExtResource( 10 )
 

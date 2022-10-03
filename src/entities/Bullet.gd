@@ -30,6 +30,7 @@ func createAndShoot(sourceType, position, direction, speed, damage, scale, colli
     "morn":
       $AnimatedSprite.animation = "morn_projectile"
       $FlamingTail.visible = false
+      $BulletLight.visible = false
     _:
       $AnimatedSprite.animation = "burn"
   hide()
