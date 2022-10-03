@@ -54,6 +54,7 @@ playing = true
 [node name="HealthBar" parent="." instance=ExtResource( 5 )]
 position = Vector2( 0, -25 )
 scale = Vector2( 0.6, 0.2 )
+z_index = 9
 
 [connection signal="health_changed" from="." to="HealthBar" method="_on_Parent_health_changed"]
 [connection signal="shoot" from="." to="BulletFactory" method="_on_shoot"]
