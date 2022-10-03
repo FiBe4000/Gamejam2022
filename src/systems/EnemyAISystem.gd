@@ -94,6 +94,15 @@ func do_movement(delta):
         var strafe_dir = mob.get_strafe_dir()
         dir = dir + dir.normalized().rotated(PI/2 * strafe_dir) * move_speed
     
+    # avoid others
+    for mob2 in mobs:
+      if mob == mob2:
+        continue
+      var bop = mob.position - mob2.position
+      var l = bop.length()
+      if l < 30:
+        dir = dir + bop.normalized() * 1000/l
+    
     mob.move(dir.normalized(), move_speed)
 
 
