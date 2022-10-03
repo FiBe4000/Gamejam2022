@@ -26,6 +26,7 @@ var desired_distance = 100
 var rof = 0.5
 var last_shot = 0
 var shoot_cooldown = 0
+var shooting = false
 
 var Bullet = preload("res://src/entities/Bullet.tscn")
 
@@ -43,51 +44,51 @@ func init(pos, type, behavior_move, behavior_shoot, difficulty_scale):
   scale(difficulty_scale)
 
 func scale(difficulty_scale):
-  max_health*= difficulty_scale
-  hit_points*= difficulty_scale
-  move_speed*= difficulty_scale / 2 # scale slower
-  bullet_speed*= difficulty_scale / 2
-  bullet_damage*= difficulty_scale
-  rof*= difficulty_scale / 3
-  bullet_spread*= difficulty_scale / 10 # higher rof supports higher spread -> harder to dodge
-  bullet_damage*= difficulty_scale
+  max_health *= difficulty_scale
+  hit_points *= difficulty_scale
+  move_speed *= 1 + difficulty_scale / 2 - 1.0 / 2 # scale slower
+  bullet_speed *= 1 + difficulty_scale / 2 - 1.0 / 2
+  bullet_damage *= difficulty_scale
+  rof *= 1 + difficulty_scale / 3 - 1.0 / 3
+  bullet_spread *= 1 + difficulty_scale / 10 - 1.0 / 10# higher rof supports higher spread -> harder to dodge
+  bullet_damage *= difficulty_scale
 
 func _physics_process(delta):
   if dir.x != 0 or dir.y != 0:
     look_dir = dir
   
-  var vel = dir * speed
-  self.move_and_slide(vel)
-  select_animation(vel)
+  if not shooting:
+    var vel = dir * speed
+    self.move_and_slide(vel)
+    select_animation(vel)
   
-  shoot_cooldown = 1.0/rof
   last_shot += delta
   
   #if Input.is_action_pressed("shoot"):
   #  shoot(Vector2(1,0))
 
+
+func map_type_to_sprite(type):
+  match (type):
+    "normal":
+      return "normal"
+    "dark":
+      return "dark"
+    "fire":
+      return "fire"
+    "ice", "fey":
+      return "fey"
+
+
 func select_animation(vel):
+  if not ($AnimatedSprite as AnimatedSprite).is_playing():
+    return
+  
   if vel.length() > 0:
-    match (type):
-      "normal":
-        $AnimatedSprite.animation = "walk_normal"
-      "dark":
-        $AnimatedSprite.animation = "walk_dark"
-      "fire":
-        $AnimatedSprite.animation = "walk_fire"
-      "ice":
-        $AnimatedSprite.animation = "walk_fey"
+    $AnimatedSprite.animation = "walk_"+map_type_to_sprite(type)
     $AnimatedSprite.play()
   else:
-    match (type):
-      "normal":
-        $AnimatedSprite.animation = "idle_normal"
-      "dark":
-        $AnimatedSprite.animation = "idle_dark"
-      "fire":
-        $AnimatedSprite.animation = "idle_fire"
-      "ice":
-        $AnimatedSprite.animation = "idle_fey"
+    $AnimatedSprite.animation = "idle_"+map_type_to_sprite(type)
     $AnimatedSprite.play()
   
   if dir.x != 0:
@@ -154,19 +155,11 @@ func shoot(aim_dir):
     aim_dir = look_dir
   aim_dir = aim_dir.normalized()
   
-  match (type):
-    "normal":
-      $AnimatedSprite.animation = "attack_normal"
-    "dark":
-      $AnimatedSprite.animation = "attack_dark"
-    "fire":
-      $AnimatedSprite.animation = "attack_fire"
-    "ice":
-      $AnimatedSprite.animation = "attack_fey"
-  
+  shoot_cooldown = 1.0/rof
   if last_shot >= shoot_cooldown:
     last_shot = 0
-    $AnimatedSprite.play()
+    shooting == true
+    $AnimatedSprite.play("attack_"+map_type_to_sprite(type))
     emit_signal("shoot", "Mob", position, aim_dir, bullet_speed, bullet_damage, Vector2(0.3, 0.3))
 
 func set_type(type):
@@ -184,10 +177,15 @@ func set_type(type):
     "ice":
       disable_collision()
       $FeyTypeCollisionShape2D.disabled = false
-      
+
 func disable_collision():
-      $NormalTypeCollisionShape2D.disabled = true
-      $DarkTypeCollisionShape2D.disabled = true
-      $FireTypeCollisionShape2D.disabled = true
-      $FeyTypeCollisionShape2D.disabled = true
-  
+  $NormalTypeCollisionShape2D.disabled = true
+  $DarkTypeCollisionShape2D.disabled = true
+  $FireTypeCollisionShape2D.disabled = true
+  $FeyTypeCollisionShape2D.disabled = true
+
+
+func _on_AnimatedSprite_animation_finished():
+  if $AnimatedSprite.animation != "walk_"+map_type_to_sprite(type):
+    shooting = false
+  pass # Replace with function body.

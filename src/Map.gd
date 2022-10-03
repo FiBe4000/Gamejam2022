@@ -10,7 +10,7 @@ var worlds = {
   WS.World.FIRE: $NormalLevel,
   WS.World.ICE: $NormalLevel,
  }
- 
+
 var tilesets = {
   WS.World.NORMAL: "res://graphics/tilemaps/home_plane.tres",
   WS.World.DARK: "res://graphics/tilemaps/dark_plane_fixed_2.tres",
@@ -21,7 +21,10 @@ var activeWorld = WS.World.NORMAL
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-   _set_visibility()
+  _set_visibility()
+  for child in $NormalLevel.get_children():
+    (child as TileMap).scale.x = 2
+    (child as TileMap).scale.y = 2
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -33,13 +36,11 @@ func _set_visibility():
     if worlds[k]:
       if k == activeWorld:
       # Loop through all the subnodes and set them to visible
-        for i in range(worlds[k].get_child_count()):
-          worlds[k].get_child(i).visible = true
+        for child in worlds[k].get_children():
+          child.visible = true
           # Set the tile map
-          if worlds[k].get_child(i).is_class("TileMap"):
-            worlds[k].get_child(i).set_tileset(load(tilesets[k]))
-
-      
+          if child.is_class("TileMap"):
+            child.set_tileset(load(tilesets[k]))
 
 
 # Take a tile map and set the collision layer to an unused layer if it is not visible
