@@ -94,9 +94,9 @@ func _on_MobFactory_mob_died(mob):
   match(mob.get_mob_type()):
     "normal":
       world = World.NORMAL
-    "dark":
+    "dark","morn":
       world = World.DARK
-    "fire":
+    "fire","akites_rass_professor":
       world = World.FIRE
     "ice", "fey": # "fey" near homonym to "fire"? But although it was never used to set animation, the ice animations contains the word, so prolly that.
       world = World.ICE
