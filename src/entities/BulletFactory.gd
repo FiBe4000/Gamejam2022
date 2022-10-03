@@ -11,7 +11,7 @@ func _on_shoot(sourceType, pos, dir, speed, damage, scale):
   match(sourceType):
     "Player": 
       sourceCollisionLayer = 2
-    "Mob", "morn":
+    "Mob", "morn", "akites_rass_professor":
       sourceCollisionLayer = 3
     _:
       sourceCollisionLayer = 0
