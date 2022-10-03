@@ -7,6 +7,7 @@ signal health_changed(health_percent)
 var Bullet = preload("res://src/entities/Bullet.tscn")
 
 export var max_health = 100
+export var regen = 11.1 # per second
 
 var look_dir = Vector2(1,0)
 var speed = 200
@@ -24,6 +25,9 @@ func _ready():
 
 func _physics_process(delta):
   movement()
+  
+  # regenerate health
+  set_health( min(health + regen*delta, max_health) )
   
   var cooldown = 1.0/rof
   last_shot += delta
@@ -58,16 +62,19 @@ func _on_Player_body_entered(body):
   emit_signal("hit")
   
 func hit(damage):
-  health = max(0, (health - damage))
-  emit_signal("health_changed", get_health_percent())
+  set_health( max(0, (health - damage)) )
   if health <= 0:
     emit_signal("death")
 
-func get_health():
+func set_health(health : float):
+  self.health = health
+  emit_signal("health_changed", get_health_percent())
+
+func get_health() -> float:
   return self.health
 
 func get_health_percent() -> float:
-  return (health as float)/max_health
+  return float(health)/max_health
 
 func start(pos):
   self.position = pos

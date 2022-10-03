@@ -88,8 +88,7 @@ func move(dir, speed):
   self.speed = speed
 
 func hit(damage):
-  hit_points -= damage
-  emit_signal("health_changed", get_health_percent())
+  set_health( max(0, hit_points - damage) )
   if hit_points <= 0:
     death()
 
@@ -97,8 +96,12 @@ func death():
   get_parent().despawn(self)
   queue_free()
 
+func set_health(health: float):
+  self.hit_points = health
+  emit_signal("health_changed", get_health_percent())
+
 func get_health_percent() -> float:
-  return (hit_points as float)/max_health
+  return float(hit_points)/max_health
 
 func get_mob_type():
   return type
