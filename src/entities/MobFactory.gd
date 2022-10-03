@@ -50,12 +50,12 @@ func spawn(type, behaviour_move, behaviour_shoot):
   if col.collider != ply:
     # Unable to move to player, retry new position (next frame)
     mob.queue_free()
-    return false
+    return null
     #spawn(type, behaviour_move, behaviour_shoot, delta)
   else:
     last_spawn = 0
     emit_signal("mob_spawn", mob)
-    return true
+    return mob
   #var pool = (mob.patrol as PoolVector2Array) # Testing patrol stuff, meant to be used only in scene-editor
   #pool.push_back(mob.position)
   #pool.push_back(mob.position + Vector2(150, 0))
@@ -76,8 +76,9 @@ func despawn(mob):
 func _on_MornTimer_timeout():
   var i = rand_range(4,6)
   var type = Type.keys()[i].to_lower()
-  var spawn = spawn(type, [Behaviours.Behaviour_Move.KEEP_DISTANCE], [Behaviours.Behaviour_Shoot.AIM])
-  if not spawn:
+  var mob = spawn(type, [Behaviours.Behaviour_Move.KEEP_DISTANCE], [Behaviours.Behaviour_Shoot.AIM])
+  if not mob:
     spaw_morn = true
   else:
     spaw_morn = false
+    mob.scale(mob.difficulty_scale * 3)

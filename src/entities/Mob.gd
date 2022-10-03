@@ -44,10 +44,10 @@ func init(pos, type, behavior_move, behavior_shoot, difficulty_scale):
   self.behavior_shoot = behavior_shoot
   set_type(self.type)
   scale(difficulty_scale)
-  set_health(get_max_health())
 
 func scale(difficulty_scale):
   self.difficulty_scale = difficulty_scale
+  set_health(get_max_health())
 
 func _physics_process(delta):
   if dir.x != 0 or dir.y != 0:
