@@ -28,12 +28,12 @@ func _physics_process(delta):
   if mobs.size() < MOB_MAX and last_spawn > spawn_delay:
     var i = rand_range(0,len(Type.keys()))
     var type = Type.keys()[i].to_lower()
-    spawn(type, [Behaviours.Behaviour_Move.KEEP_DISTANCE], [Behaviours.Behaviour_Shoot.AIM], delta)
+    spawn(type, [Behaviours.Behaviour_Move.KEEP_DISTANCE], [Behaviours.Behaviour_Shoot.AIM])
 
-func spawn(type, behaviour_move, behaviour_shoot, delta):
+func spawn(type, behaviour_move, behaviour_shoot, ):
   var ply = $"../Player"
   var ply_pos = ply.position
-  var mob_pos = new_mob_position(delta)
+  var mob_pos = new_mob_position()
   var mob = Mob.instance()
   mob.connect("shoot", $BulletFactory, "_on_shoot")
   self.add_child(mob)
@@ -52,7 +52,7 @@ func spawn(type, behaviour_move, behaviour_shoot, delta):
   #pool.push_back(mob.position + Vector2(150, 0))
   #mob.patrol = pool
 
-func new_mob_position(delta):
+func new_mob_position():
   var pos = Vector2(rand_range(-400, 400), rand_range(-400, 400))
   return pos
 
