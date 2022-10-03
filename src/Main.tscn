@@ -15,19 +15,6 @@
 [ext_resource path="res://graphics/shaders/screen.gdshader" type="Shader" id=13]
 [ext_resource path="res://src/LightShader.gd" type="Script" id=14]
 
-[sub_resource type="ParticlesMaterial" id=7]
-emission_shape = 2
-emission_box_extents = Vector3( 1000, 20, 1 )
-flag_disable_z = true
-direction = Vector3( -45, 45, 0 )
-spread = 0.0
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 600.0
-initial_velocity_random = 0.14
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-scale = 2.0
-
 [sub_resource type="Shader" id=5]
 code = "shader_type canvas_item;
 void fragment(){
@@ -62,6 +49,19 @@ shader_param/light_color = null
 
 [sub_resource type="NoiseTexture" id=10]
 
+[sub_resource type="ParticlesMaterial" id=7]
+emission_shape = 2
+emission_box_extents = Vector3( 1000, 20, 1 )
+flag_disable_z = true
+direction = Vector3( -45, 45, 0 )
+spread = 0.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 600.0
+initial_velocity_random = 0.14
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 2.0
+
 [node name="Main" type="Node2D"]
 script = ExtResource( 5 )
 
@@ -90,17 +90,6 @@ position = Vector2( 764, 509 )
 
 [node name="EnemyAISystem" parent="." instance=ExtResource( 10 )]
 
-[node name="HUD_Scene" parent="." instance=ExtResource( 11 )]
-
-[node name="Weather" type="Particles2D" parent="HUD_Scene"]
-position = Vector2( 874, -18 )
-z_index = 4
-amount = 400
-lifetime = 4.0
-visibility_rect = Rect2( -600, -325, 1200, 1000 )
-process_material = SubResource( 7 )
-texture = ExtResource( 12 )
-
 [node name="HUD" type="CanvasLayer" parent="."]
 
 [node name="TimerVisualizer" type="TextureProgress" parent="HUD"]
@@ -126,6 +115,17 @@ margin_bottom = 40.0
 rect_scale = Vector2( 2.0284, 1.19543 )
 texture = SubResource( 10 )
 script = ExtResource( 14 )
+
+[node name="HUD_Scene" parent="." instance=ExtResource( 11 )]
+
+[node name="Weather" type="Particles2D" parent="HUD_Scene"]
+position = Vector2( 874, -18 )
+z_index = 4
+amount = 400
+lifetime = 4.0
+visibility_rect = Rect2( -600, -325, 1200, 1000 )
+process_material = SubResource( 7 )
+texture = ExtResource( 12 )
 
 [connection signal="death" from="Player" to="HUD_Scene" method="_on_Player_death"]
 [connection signal="timeout" from="WorldSwitchTimer" to="WorldChangeSystem" method="_on_WorldSwitchTimer_timeout"]

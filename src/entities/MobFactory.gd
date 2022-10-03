@@ -36,6 +36,7 @@ func spawn(type, behaviour_move, behaviour_shoot):
   var ply = $"../Player"
   var ply_pos = ply.position
   var mob_pos = new_mob_position()
+  mob_pos = Vector2(1,0).rotated(mob_pos.x) * mob_pos.y
   var mob = Mob.instance()
   mob.connect("shoot", $BulletFactory, "_on_shoot")
   self.add_child(mob)
@@ -55,7 +56,7 @@ func spawn(type, behaviour_move, behaviour_shoot):
   #mob.patrol = pool
 
 func new_mob_position():
-  var pos = Vector2(rand_range(-400, 400), rand_range(-400, 400))
+  var pos = Vector2(rand_range(-0, 2*PI), rand_range(200, 400))
   return pos
 
 func despawn(mob):
