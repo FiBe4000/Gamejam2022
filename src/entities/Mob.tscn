@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://src/entities/Mob.gd" type="Script" id=1]
 [ext_resource path="res://graphics/enemies/dark/darkMookWalk2.png" type="Texture" id=2]
@@ -18,10 +18,23 @@
 [ext_resource path="res://graphics/enemies/fey/feyMookWalk2.png" type="Texture" id=16]
 [ext_resource path="res://graphics/enemies/fey/feyMookWalk1.png" type="Texture" id=17]
 [ext_resource path="res://src/HUD/HealthBar.tscn" type="PackedScene" id=18]
+[ext_resource path="res://graphics/enemies/bosses/AkitesRassProfessor/akitesRassProfessorWalk2.png" type="Texture" id=19]
+[ext_resource path="res://graphics/enemies/bosses/Morn/MornWalk2.png" type="Texture" id=20]
+[ext_resource path="res://graphics/enemies/bosses/Morn/MornIdle.png" type="Texture" id=21]
+[ext_resource path="res://graphics/enemies/bosses/Morn/MornWalk1.png" type="Texture" id=22]
+[ext_resource path="res://graphics/enemies/bosses/Morn/MornAttack.png" type="Texture" id=23]
+[ext_resource path="res://graphics/enemies/bosses/AkitesRassProfessor/akitesRassProfessorIdle.png" type="Texture" id=24]
+[ext_resource path="res://graphics/enemies/bosses/AkitesRassProfessor/akitesRassProfessorWalk1.png" type="Texture" id=25]
+[ext_resource path="res://graphics/enemies/bosses/AkitesRassProfessor/akitesRassProfessorAttack.png" type="Texture" id=26]
 
 [sub_resource type="SpriteFrames" id=1]
 resource_local_to_scene = true
 animations = [ {
+"frames": [ ExtResource( 26 ) ],
+"loop": true,
+"name": "attack_akites_rass_professor",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 13 ), ExtResource( 13 ), ExtResource( 13 ), ExtResource( 13 ), ExtResource( 13 ) ],
 "loop": true,
 "name": "attack_dark",
@@ -37,9 +50,19 @@ animations = [ {
 "name": "attack_fire",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 23 ) ],
+"loop": true,
+"name": "attack_morn",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 11 ), ExtResource( 11 ), ExtResource( 11 ), ExtResource( 11 ), ExtResource( 11 ) ],
 "loop": true,
 "name": "attack_normal",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 24 ) ],
+"loop": true,
+"name": "idle_akites_rass_professor",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 10 ) ],
@@ -57,9 +80,19 @@ animations = [ {
 "name": "idle_fire",
 "speed": 5.0
 }, {
+"frames": [ ExtResource( 21 ) ],
+"loop": true,
+"name": "idle_morn",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 12 ) ],
 "loop": true,
 "name": "idle_normal",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 25 ), ExtResource( 19 ) ],
+"loop": true,
+"name": "walk_akites_rass_professor",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 9 ), ExtResource( 2 ) ],
@@ -75,6 +108,11 @@ animations = [ {
 "frames": [ ExtResource( 6 ), ExtResource( 7 ) ],
 "loop": true,
 "name": "walk_fire",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 22 ), ExtResource( 20 ) ],
+"loop": true,
+"name": "walk_morn",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 3 ), ExtResource( 8 ) ],
@@ -99,6 +137,14 @@ height = 24.0
 radius = 14.0
 height = 24.0
 
+[sub_resource type="CapsuleShape2D" id=6]
+radius = 24.0
+height = 4.0
+
+[sub_resource type="CapsuleShape2D" id=7]
+radius = 18.0
+height = 16.0
+
 [node name="Mob" type="KinematicBody2D" groups=["mobs"]]
 collision_layer = 4
 collision_mask = 19
@@ -107,25 +153,36 @@ script = ExtResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 3, 3 )
 frames = SubResource( 1 )
-animation = "walk_fey"
+animation = "walk_akites_rass_professor"
 frame = 1
 playing = true
 
 [node name="NormalTypeCollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource( 2 )
 disabled = true
 
 [node name="DarkTypeCollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource( 4 )
 disabled = true
 
 [node name="FireTypeCollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource( 3 )
 disabled = true
 
 [node name="FeyTypeCollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource( 5 )
 disabled = true
+
+[node name="MornCollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource( 6 )
+
+[node name="AkitesRassProfessorCollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 7 )
 
 [node name="HealthBar" parent="." instance=ExtResource( 18 )]
 position = Vector2( 0, -35 )
