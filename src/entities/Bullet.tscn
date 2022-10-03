@@ -13,18 +13,22 @@
 [sub_resource type="CircleShape2D" id=1]
 
 [sub_resource type="AtlasTexture" id=8]
+flags = 4
 atlas = ExtResource( 8 )
 region = Rect2( 0, 0, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=9]
+flags = 4
 atlas = ExtResource( 9 )
 region = Rect2( 0, 0, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=10]
+flags = 4
 atlas = ExtResource( 6 )
 region = Rect2( 0, 0, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=11]
+flags = 4
 atlas = ExtResource( 7 )
 region = Rect2( 0, 0, 16, 16 )
 
@@ -37,7 +41,7 @@ animations = [ {
 }, {
 "frames": [ SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ) ],
 "loop": true,
-"name": "morn_glory",
+"name": "morn_projectile",
 "speed": 5.0
 } ]
 
